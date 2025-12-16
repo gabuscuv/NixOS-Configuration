@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
-
 {
+  
+  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  
   ############################################################
   # CPU / Power (Laptop)
   ############################################################
@@ -8,7 +10,7 @@
   powerManagement.cpuFreqGovernor = "balanced";
 
   # GPU
-    services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
+  services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
 
   hardware.graphics = {
     enable = true;
