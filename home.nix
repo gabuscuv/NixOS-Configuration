@@ -13,13 +13,14 @@
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ ];
+      theme = "agnoster";
+    };
   };
 
-  oh-my-zsh = {
-    enable = true;
-    plugins = [ ];
-    theme = "agnoster";
-  };
+
 
   ############################################################
   # CLI Tools

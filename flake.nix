@@ -68,12 +68,11 @@
             }
           ];
         };
-  };
-
-  devShells.${system} = {
-    unreal  = import ./shells/unreal.nix  { inherit pkgs; };
-    godot   = import ./shells/godot.nix   { inherit pkgs; };
-    unity   = import ./shells/unity.nix   { inherit pkgs; };
-    android = import ./shells/android.nix { inherit pkgs; };
+    devShells.${system} = {
+      unreal  = import ./shells/unreal.nix  { inherit pkgs; };
+      godot   = import ./shells/godot.nix   { inherit pkgs; };
+      unity   = import ./shells/unity.nix   { inherit pkgs; };
+      android = import ./shells/android.nix { inherit pkgs; };
+    };
   };
 }

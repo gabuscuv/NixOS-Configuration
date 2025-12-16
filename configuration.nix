@@ -95,11 +95,6 @@
   
   ## Gamemode
   programs.gamemode.enable = true;
-
-  ## Android Devices
-  services.udev.packages = with pkgs; [
-    android-udev-rules
-  ];
     
   ## Steam / VR
   programs.steam = {

@@ -9,8 +9,7 @@
 
   hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
   };
 
   hardware.nvidia = {
@@ -45,14 +44,4 @@
     package = config.boot.kernelPackages.nvidiaPackages.production;
   };
  
- hardware.nvidia.
-
-  programs.gamemode.enable = true;
-
-  ############################################################
-  # Android Devices
-  ############################################################
-  services.udev.packages = with pkgs; [
-    android-udev-rules
-  ];
 }
