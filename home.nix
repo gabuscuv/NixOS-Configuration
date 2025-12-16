@@ -54,8 +54,8 @@
     pnpm
 
     android-tools
-    android-sdk
-    android-ndk
+    #android-sdk ## TODO | FIXME
+    #android-ndk ## TODO | FIXME
     gradle
     jdk17
     jdk11
@@ -94,10 +94,10 @@
       ms-dotnettools.csharp
       ms-vscode.cpptools
       ms-vscode.cmake-tools
-      ms-vscode.vscode-typescript-next
+      # ms-vscode.vscode-typescript-next ## TODO | FIXME
       esbenp.prettier-vscode
       eamodio.gitlens
-      ms-vscode.unreal-engine
+      # ms-vscode.unreal-engine ## TODO | FIXME
     ];
   };
 

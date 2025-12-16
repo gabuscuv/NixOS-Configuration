@@ -66,6 +66,8 @@
     jack.enable = true;
   };
 
+  programs.zsh.enable = true;
+
   ## User
   users.users.gabuscuv = {
     isNormalUser = true;
@@ -101,10 +103,10 @@
   # Unreal Engine binaries
   programs.nix-ld.enable = true;
   
-  # Android
-  services.udev.packages = with pkgs; [
-  android-udev-rules
-];
+  # Android // TODO! | FIXME!
+  #services.udev.packages = with pkgs; [
+  #android-udev-rules
+  #];
 }
 
   
