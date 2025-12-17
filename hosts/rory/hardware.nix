@@ -44,5 +44,14 @@
     # probaly future value: config.boot.kernelPackages.nvidiaPackages.legacy_580
     package = config.boot.kernelPackages.nvidiaPackages.production;
   };
+
+  ## TODO
+  hardware.nvidia.prime = {
+    amdgpuBusId = "PCI:54:0:0";
+    nvidiaBusId = "PCI:1:0:0";
+  };
  
+
+  ## Virtualization
+  boot.kernelModules = [ "kvm-intel" ];
 }

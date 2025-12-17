@@ -45,11 +45,12 @@
     powerManagement.enable = true;
   };
 
-  hardware.nvidia.prime = {
-    amdgpuBusId = "PCI:54:0:0"; # If you have an AMD iGPU
-    nvidiaBusId = "PCI:1:0:0";
-  };
+## overrided by nix-hardware
+# hardware.nvidia.prime = {
+#    amdgpuBusId = "PCI:54:0:0";
+#    nvidiaBusId = "PCI:1:0:0";
+#  };
 
-
+  boot.kernelModules = [ "kvm-amd" ];
 
 }

@@ -73,7 +73,19 @@
     isNormalUser = true;
     description = "Gaby Bustillo del Cuvillo";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "adbusers" "audio" "video" "input" ];
+    extraGroups = [ 
+      "networkmanager" 
+      "wheel" 
+      "adbusers" 
+      "audio" 
+      "video" 
+      "input" 
+      # virtualisation
+      "libvirtd"
+      "kvm"
+      # Rocksmith 2014 / WineASIO
+      "rtkit"
+      ];
   };
 
   # Allow unfree packages
@@ -89,6 +101,7 @@
     git-lfs
     wget
     curl
+    rtaudio
   ];
   
   ## Gamemode
@@ -103,6 +116,19 @@
   # Unreal Engine binaries
   programs.nix-ld.enable = true;
   
+  ## Virtualisation
+  virtualisation.libvirtd = {
+  enable = true;
+  qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = false;
+      ovmf.enable = true;
+      swtpm.enable = true;
+    };
+  };
+
+  networking.firewall.trustedInterfaces = [ "virbr0" ];
+
   # Android // TODO! | FIXME!
   #services.udev.packages = with pkgs; [
   #android-udev-rules
