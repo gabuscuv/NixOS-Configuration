@@ -2,7 +2,9 @@
   
   inputs = {
   
-    nixos-hardware.url = "github:gabuscuv/nixos-hardware/15ahp10-oled";
+    nixos-hardware = {
+      url = "github:gabuscuv/nixos-hardware/15ahp10";
+    };
     
     ## Rocksmith 2014 WineASIO / pipewire
     # A flake providing necessary module `programs.steam.rocksmithPatch`
@@ -10,9 +12,9 @@
       url = "github:re1n0/nixos-rocksmith";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-  }
+  };
 
-  outputs = { self, nixpkgs, home-manager, disko, ... }:
+  outputs = { self, nixpkgs, home-manager, disko, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
@@ -20,6 +22,7 @@
     nixosConfigurations.generic-libvirt =
       nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = {inherit inputs;};
         modules = [
           ./configuration.nix
           ./hosts/generic-libvirt
@@ -39,7 +42,7 @@
         modules = [
           inputs.nixos-rocksmith.nixosModules.default
           ./configuration.nix
-          nixos-hardware.nixosModules.lenovo-legion-15ahp10-oled
+          inputs.nixos-hardware.nixosModules.lenovo-legion-15ahp10-oled
           ./hosts/laptop
           ./disko.nix
           disko.nixosModules.disko

@@ -122,7 +122,6 @@
   qemu = {
       package = pkgs.qemu_kvm;
       runAsRoot = false;
-      ovmf.enable = true;
       swtpm.enable = true;
     };
   };
