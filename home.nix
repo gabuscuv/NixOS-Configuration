@@ -122,7 +122,6 @@
   home.packages = with pkgs; [
     # Editors
     vscode
-    vim
 
     # Game Engines
     godot_4-mono
