@@ -14,5 +14,12 @@ do
 read -p "Enter the hostname to install: " SELECTED_HOST
 done while ! echo "${HOSTNAMES}" | grep -qw "${SELECTED_HOST}"
 
-sudo nix run 'github:nix-community/disko/latest#disko-install' \
-  -- --flake '/tmp/config/etc/nixos#mymachine' 
+nix --experimental-features "nix-command flakes" \
+  run github:nix-community/disko \
+  -- --mode disko ./disko.nix
+###
+##sudo nix run github:nix-community/disko \
+##  -- --mode disko ./hosts/gamejam-laptop/disks.nix
+
+## TODO Make a Disk selector
+sudo nixos-install --flake .#${SELECTED_HOST} --disk main /dev/vda --show-trace

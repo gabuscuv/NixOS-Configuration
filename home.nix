@@ -29,8 +29,8 @@
     wine32 = "WINEPREFIX=\"$WINEPREFIX32\" WINEARCH=win32 wine";
     wine = "wine64";
     ## XDG
-    wget = "wget --hsts-file="$XDG_DATA_HOME/wget-hsts";
-  }
+    wget = "wget --hsts-file=\"$XDG_DATA_HOME/wget-hsts\"";
+  };
 
   home.sessionVariables = {
     # PATH=$PATH:$HOME/.local/bin:$HOME/.dotnet:$HOME/.npm-global/bin:/var/lib/flatpak/exports/bin:$GEM_HOME/ruby/2.7.0/bin:$HOME/.dotnet/tools:$GOPATH/bin;
@@ -95,7 +95,7 @@
   programs.firefox = {
     enable = true;
     languagePacks = ["en-GB" "es-ES" "jp-JP"];
-  }
+  };
 
   programs.thunderbird = {
     enable = true;
@@ -103,7 +103,7 @@
     profiles.default = {
       isDefault = true;
     };
-  }
+  };
 
   ############################################################
   # File sharing
@@ -112,14 +112,14 @@
   services.syncthing = {
     enable = true;
     tray.enable = true;
-  }
+  };
 
   programs.rclone.enable = true;
 
   ############################################################
   # CLI Tools
   ############################################################
-  home.packages = with pkgs; [
+  home.packages = with pkgs [
     # Editors
     vscode
     vim
@@ -185,15 +185,16 @@
   ############################################################
   # Virtualization
   ############################################################
+  ## FIX AFTER
   # virt-manager config directory
-  xdg.configFile."libvirt/libvirt.conf".text = ''
-    uri_default = "qemu:///system"
-  '';
+  #xdg.configFile."libvirt/libvirt.conf".text = ''
+  #  uri_default = "qemu:///system"
+  #'';
 
   # Optional QEMU user config
-  xdg.configFile."qemu/bridge.conf".text = ''
-    allow virbr0
-  '';
+  #xdg.configFile."qemu/bridge.conf".text = ''
+  #  allow virbr0
+  #'';
 
   ############################################################
   # Git
