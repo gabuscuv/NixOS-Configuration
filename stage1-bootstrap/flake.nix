@@ -6,8 +6,6 @@
   outputs = { self, disko, nixpkgs }:{
       nixosConfigurations.generic-libvirt =
         nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {inherit inputs;};
           modules = [
             ./configuration.nix
             disko.nixosModules.disko
@@ -17,7 +15,6 @@
         };
       nixosConfigurations.laptop =
         nixpkgs.lib.nixosSystem {
-          inherit system;
           modules = [
             ./configuration.nix
             disko.nixosModules.disko
@@ -27,7 +24,6 @@
         };
         nixosConfigurations.shironeko =
           nixpkgs.lib.nixosSystem {
-            inherit system;
             modules = [
               ./configuration.nix
               ./hosts/shironeko/diskio.nix
@@ -36,7 +32,6 @@
           };
         nixosConfigurations.rory =
           nixpkgs.lib.nixosSystem {
-            inherit system;
             modules = [
               ./configuration.nix
               disko.nixosModules.disko

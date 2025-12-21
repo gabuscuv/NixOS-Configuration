@@ -10,7 +10,6 @@ nixos-generate-config --root $ROOTHEAD --no-filesystems
 
 rsync -rvP $PWD/* $NIX_DIRECTORY
 rsync -rvP $NIX_DIRECTORY/hosts $STAGE1_DIR
-cp $NIX_DIRECTORY/disko.nix $STAGE1_DIR
 
 HOSTNAMES="shironeko rory victoriqu3 generic-libvirt"
 
@@ -41,4 +40,5 @@ NIX_DIRECTORY=$ROOTHEAD/etc/nixos
 
 rsync -rvP $PWD/* $NIX_DIRECTORY
 
+nixos-generate-config --root $ROOTHEAD
 nixos-install --root /mnt/nixos --flake $NIX_DIRECTORY#${SELECTED_HOST} --option accept-flake-config true
