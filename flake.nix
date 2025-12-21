@@ -26,8 +26,6 @@
         modules = [
           ./configuration.nix
           ./hosts/generic-libvirt
-          ./disko.nix
-          disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -44,8 +42,6 @@
           ./configuration.nix
           inputs.nixos-hardware.nixosModules.lenovo-legion-15ahp10-oled
           ./hosts/laptop
-          ./disko.nix
-          disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -61,8 +57,6 @@
             inputs.nixos-rocksmith.nixosModules.default
             ./configuration.nix
             ./hosts/shironeko
-            ./disko.nix
-            disko.nixosModules.disko
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -78,8 +72,6 @@
             inputs.nixos-rocksmith.nixosModules.default
             ./configuration.nix
             ./hosts/rory
-            ./disko.nix
-            disko.nixosModules.disko
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

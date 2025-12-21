@@ -1,8 +1,11 @@
 #!/bin/sh
 
-nixos-generate-config --root /tmp/config --no-filesystems
+ROOTHEAD=/tmp/config
+NIX_DIRECTORY=$ROOTHEAD/etc/nixos
 
-rsync -rvP $PWD/* /tmp/config/etc/nixos/
+nixos-generate-config --root $ROOTHEAD --no-filesystems
+
+rsync -rvP $PWD/* $NIX_DIRECTORY
 
 HOSTNAMES="shironeko rory victoriqu3 generic-libvirt"
 
@@ -15,6 +18,8 @@ read -p "Enter the hostname to install: " SELECTED_HOST
 #done while ! echo "${HOSTNAMES}" | grep -qw "${SELECTED_HOST}"
 echo "Installing NixOS for host: ${SELECTED_HOST}"
 ## TODO Make a Disk selector
-nix --experimental-features "nix-command flakes" \
-  run 'github:nix-community/disko/latest#disko-install' \
-  -- --flake /tmp/config/etc/nixos/#${SELECTED_HOST} --disk main /dev/vda
+sudo nix --experimental-features "nix-command flakes" \
+  run 'github:nix-community/disko/latest#disko-install' -- \
+  --flake "$NIX_DIRECTORY/stage1-bootstrap/#${SELECTED_HOST}" --disk main /dev/vda
+
+
