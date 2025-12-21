@@ -9,6 +9,7 @@ STAGE1_DIR=$NIX_DIRECTORY/stage1-bootstrap
 nixos-generate-config --root $ROOTHEAD --no-filesystems
 
 rsync -rvP $PWD/* $NIX_DIRECTORY
+cp $NIX_DIRECTORY/hardware-configuration.nix $STAGE1_DIR
 rsync -rvP $NIX_DIRECTORY/hosts $STAGE1_DIR
 
 HOSTNAMES="shironeko rory victoriqu3 generic-libvirt"
