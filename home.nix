@@ -119,7 +119,7 @@
   ############################################################
   # CLI Tools
   ############################################################
-  home.packages = with pkgs [
+  home.packages = with pkgs; [
     # Editors
     vscode
     vim
