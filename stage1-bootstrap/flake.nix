@@ -3,38 +3,34 @@
   inputs.disko.url = "github:nix-community/disko/latest";
   inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, disko, nixpkgs }: {
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
-    in {
+  outputs = { self, disko, nixpkgs }:{
       nixosConfigurations.generic-libvirt =
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {inherit inputs;};
           modules = [
-            ../configuration.nix
-            ../hosts/generic-libvirt/disk.nix
-            ../disko.nix
+            ./configuration.nix
             disko.nixosModules.disko
+            ./hosts/generic-libvirt/disk.nix
+            ./disko.nix
           ];
         };
       nixosConfigurations.laptop =
         nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
-            ../configuration.nix
-            ../hosts/generic-libvirt/disk.nix
-            ../disko.nix
+            ./configuration.nix
             disko.nixosModules.disko
+            ./hosts/generic-libvirt/disk.nix
+            ./disko.nix
           ];
         };
         nixosConfigurations.shironeko =
           nixpkgs.lib.nixosSystem {
             inherit system;
             modules = [
-              ../configuration.nix
-              ../hosts/shironeko/diskio.nix
+              ./configuration.nix
+              ./hosts/shironeko/diskio.nix
               disko.nixosModules.disko
             ];
           };
@@ -42,13 +38,11 @@
           nixpkgs.lib.nixosSystem {
             inherit system;
             modules = [
-              ../configuration.nix
-              ../disko.nix
-              ../hosts/rory/disk.nix
+              ./configuration.nix
               disko.nixosModules.disko
-
+              ./hosts/rory/disk.nix
+              ./disko.nix
             ];
           };
     };
-  }
 }

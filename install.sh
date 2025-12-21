@@ -1,11 +1,16 @@
 #!/bin/sh
 
+## STAGE 1 for Low Memory NixOS Installations
+
 ROOTHEAD=/tmp/config
 NIX_DIRECTORY=$ROOTHEAD/etc/nixos
+STAGE1_DIR=$NIX_DIRECTORY/stage1-bootstrap
 
 nixos-generate-config --root $ROOTHEAD --no-filesystems
 
 rsync -rvP $PWD/* $NIX_DIRECTORY
+rsync -rvP $NIX_DIRECTORY/hosts $STAGE1_DIR
+cp $NIX_DIRECTORY/disko.nix $STAGE1_DIR
 
 HOSTNAMES="shironeko rory victoriqu3 generic-libvirt"
 
@@ -20,6 +25,20 @@ echo "Installing NixOS for host: ${SELECTED_HOST}"
 ## TODO Make a Disk selector
 sudo nix --experimental-features "nix-command flakes" \
   run 'github:nix-community/disko/latest#disko-install' -- \
-  --flake "$NIX_DIRECTORY/stage1-bootstrap/#${SELECTED_HOST}" --disk main /dev/vda
+  --flake "$STAGE1_DIR#${SELECTED_HOST}" --disk main /dev/vda
 
+echo "NixOS installation for host ${SELECTED_HOST} completed."
+mkdir -p /mnt/nixos
+mount /dev/vda2 -o subvol=@ /mnt/nixos
+mount /dev/vda2 -o subvol=@home /mnt/nixos/home
+mount /dev/vda2 -o subvol=@log /mnt/nixos/var/log
+mount /dev/vda2 -o subvol=@snapshots /mnt/nixos/.snapshots
+mount /dev/vda2 -o subvol=@nix /mnt/nixos/nix
+mount /dev/vda1 /mnt/nixos/boot/efi
 
+ROOTHEAD=/mnt/nixos
+NIX_DIRECTORY=$ROOTHEAD/etc/nixos
+
+rsync -rvP $PWD/* $NIX_DIRECTORY
+
+nixos-install --root /mnt/nixos --flake $NIX_DIRECTORY#${SELECTED_HOST} --option accept-flake-config true
