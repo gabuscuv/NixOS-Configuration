@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 ## STAGE 1 for Low Memory NixOS Installations
 
@@ -34,7 +34,7 @@ mount /dev/vda2 -o subvol=@home /mnt/nixos/home
 mount /dev/vda2 -o subvol=@log /mnt/nixos/var/log
 mount /dev/vda2 -o subvol=@snapshots /mnt/nixos/.snapshots
 mount /dev/vda2 -o subvol=@nix /mnt/nixos/nix
-mount /dev/vda1 /mnt/nixos/boot/efi
+mount /dev/vda1 /mnt/nixos/boot
 
 ROOTHEAD=/mnt/nixos
 NIX_DIRECTORY=$ROOTHEAD/etc/nixos
