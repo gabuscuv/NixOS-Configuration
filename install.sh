@@ -1,5 +1,5 @@
-#!/bin/sh
-
+#!/bin/bash
+set -e
 ## STAGE 1 for Low Memory NixOS Installations
 
 ROOTHEAD=/tmp/config
