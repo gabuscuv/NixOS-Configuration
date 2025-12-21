@@ -4,6 +4,8 @@
   home.homeDirectory = "/home/gabuscuv";
   home.stateVersion = "25.11";
 
+  xdg.enable = true;
+
   ############################################################
   # Shell
   ############################################################
@@ -14,7 +16,7 @@
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
       enable = true;
-      plugins = [ ];
+      plugins = [git];
       theme = "agnoster";
     };
   };
@@ -53,15 +55,7 @@
     FFFLAGS="$COMMON_FLAGS";
     MAKEOPTS="-j17";
 
-    ## XDG
-
-    ## XDG Standards
-    
-    XDG_DESKTOP_DIR="$HOME/Desktop";
-    XDG_DATA_HOME="$HOME/.local/share";
-    XDG_CONFIG_HOME="$HOME/.config";
-    XDG_STATE_HOME="$HOME/.local/state";
-    XDG_CACHE_HOME="$HOME/.cache";
+    ## XDG  
     XDG_RUNTIME_DIR="/run/user/$UID";
 
     ## XDG Derivated
@@ -129,8 +123,8 @@
 
     # C / C++
     gcc
-    clang
-    clang-tools
+    #clang # Use in shell envioriments
+    #clang-tools # Use in shell envioriments
     gdb
     cmake
     meson
@@ -149,9 +143,9 @@
     android-tools
     #android-sdk ## TODO | FIXME
     #android-ndk ## TODO | FIXME
-    gradle
+    #gradle  # Use in shell envioriments
     jdk17
-    jdk11
+    #jdk11  # Use in shell envioriments
 
     # Graphics / GameDev
     blender
@@ -159,6 +153,11 @@
     shaderc
     glfw
     glm
+
+    # Multimedia
+    gimp
+    mpv
+    feh
 
     # Utilities
     ripgrep
