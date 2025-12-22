@@ -251,7 +251,7 @@
     uri_default = "qemu:///system"
   '';
 
-   Optional QEMU user config
+  # Optional QEMU user config
   xdg.configFile."qemu/bridge.conf".text = ''
     allow virbr0
   '';
@@ -262,10 +262,12 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
-    user = {
-      name = "Gabriel Bustillo del Cuvillo";
-      email = "me@gabusuv.dev";
-      };
+    settings = {
+      user = {
+        name = "Gabriel Bustillo del Cuvillo";
+        email = "me@gabusuv.dev";
+        };
+    };
   };
 
   ############################################################
