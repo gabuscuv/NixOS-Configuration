@@ -116,6 +116,10 @@
 
   # Unreal Engine binaries
   programs.nix-ld.enable = true;
+
+  # AppImage support, Needed for FMOD Studio and other apps
+  programs.appimage.enable = true;
+  programs.appimage.binfmt = true;
   
   ## Virtualisation
   virtualisation.libvirtd = {
