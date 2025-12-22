@@ -246,25 +246,26 @@
   ############################################################
   # Virtualization
   ############################################################
-  ## FIX AFTER
   # virt-manager config directory
-  #xdg.configFile."libvirt/libvirt.conf".text = ''
-  #  uri_default = "qemu:///system"
-  #'';
+  xdg.configFile."libvirt/libvirt.conf".text = ''
+    uri_default = "qemu:///system"
+  '';
 
-  # Optional QEMU user config
-  #xdg.configFile."qemu/bridge.conf".text = ''
-  #  allow virbr0
-  #'';
+   Optional QEMU user config
+  xdg.configFile."qemu/bridge.conf".text = ''
+    allow virbr0
+  '';
 
   ############################################################
   # Git
   ############################################################
   programs.git = {
     enable = true;
-    userName = "Gabriel Bustillo del Cuvillo";
-    userEmail = "me@gabusuv.dev";
     lfs.enable = true;
+    user = {
+      name = "Gabriel Bustillo del Cuvillo";
+      email = "me@gabusuv.dev";
+      };
   };
 
   ############################################################
@@ -272,15 +273,23 @@
   ############################################################
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
-      ms-dotnettools.csharp
-      ms-vscode.cpptools
-      ms-vscode.cmake-tools
-      # ms-vscode.vscode-typescript-next ## TODO | FIXME
-      esbenp.prettier-vscode
-      eamodio.gitlens
-      # ms-vscode.unreal-engine ## TODO | FIXME
-    ];
+    profiles ={
+      default = {
+        settings = {
+          "editor.formatOnSave" = true;
+          "cmake.configureOnOpen" = true;
+        };
+        extensions = with pkgs.vscode-extensions; [
+            ms-dotnettools.csharp
+            ms-vscode.cpptools
+            ms-vscode.cmake-tools
+            # ms-vscode.vscode-typescript-next ## TODO | FIXME
+            esbenp.prettier-vscode
+            eamodio.gitlens
+            # ms-vscode.unreal-engine ## TODO | FIXME
+          ];
+      };
+    };
   };
 
   ############################################################
