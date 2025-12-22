@@ -182,7 +182,7 @@
     # Multimedia
     audacity
     gimp
-    davinci-resolve
+    davinci-resolve ## Too Big for VM.
     feh
     ffmpeg
     imagemagick
@@ -212,12 +212,12 @@
     swtpm
 
     ## KDE Stuff
-    wallpaper-engine-kde-plugin
+    kdePackages.wallpaper-engine-plugin
 
     ## Guitar
     # Utils
     guitarix
-    tuxguitar
+    #tuxguitar ## Fails to build
     # Rocksmith 2014 / WineASIO
     helvum # Lets you view pipewire graph and connect IOs
   ];
