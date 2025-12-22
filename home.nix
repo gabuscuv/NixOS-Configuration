@@ -16,7 +16,7 @@
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
       enable = true;
-      plugins = [git];
+      plugins = ["git"];
       theme = "agnoster";
     };
   };
@@ -190,11 +190,15 @@
 
     # Utilities
     ripgrep
+    lm_sensors
     fd
     htop
     screen
     rdiff-backup
+    # Archives
     unzip
+    p7zip
+    xz
 
     # Virtualization
     virt-manager
