@@ -277,7 +277,7 @@
     enable = true;
     profiles ={
       default = {
-        settings = {
+        userSettings = {
           "editor.formatOnSave" = true;
           "cmake.configureOnOpen" = true;
         };
