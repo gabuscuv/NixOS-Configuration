@@ -208,6 +208,7 @@
     imhex
 
     # Utilities
+    wineWowPackages.full
     ripgrep
     lm_sensors
     fd
