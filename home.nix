@@ -105,11 +105,11 @@
   
   services.easyeffects.enable = true;
   
-  programs.pavucontrol.enable = true;
+  #programs.pavucontrol.enable = true;
 
   programs.mpv = {
     enable = true;
-    enableYoutubeDl = true;
+   # enableYoutubeDl = true;
     config = {
       profile = "gpu-hq";
       scale="ewa_lanczossharp";
@@ -123,7 +123,7 @@
     };
   };
 
-  programs.youtube-dl.enable = true;
+  #programs.youtube-dl.enable = true;
 
   programs.obs-studio.enable = true;
 
