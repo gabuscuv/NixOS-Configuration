@@ -31,14 +31,14 @@
     wine32 = "WINEPREFIX=\"$WINEPREFIX32\" WINEARCH=win32 wine";
     wine = "wine64";
     ## XDG
-    wget = "wget --hsts-file=\"$XDG_DATA_HOME/wget-hsts\"";
+    wget = "wget --hsts-file=\ xdg.dataHome + "/wget-hsts\"";
   };
 
   home.sessionVariables = rec {
     # PATH=$PATH:$HOME/.local/bin:$HOME/.dotnet:$HOME/.npm-global/bin:/var/lib/flatpak/exports/bin:$GEM_HOME/ruby/2.7.0/bin:$HOME/.dotnet/tools:$GOPATH/bin;
     # WINE Stuff
-    WINEPREFIX="$XDG_DATA_HOME/wine";
-    WINEPREFIX32="$XDG_DATA_HOME/wine32";
+    WINEPREFIX= xdg.dataHome + "/wine";
+    WINEPREFIX32= xdg.dataHome + "/wine32";
     
     ## Gaming Stuff
     PROTON_HIDE_NVIDIA_GPU="0";
@@ -62,22 +62,22 @@
     ANDROID_HOME="$HOME/Android/Sdk";
     NDK_ROOT="$ANDROID_HOME/Sdk/ndk";
     CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv";
-    GNUPGHOME="$XDG_DATA_HOME/gnupg";
-    GRADLE_USER_HOME="$XDG_DATA_HOME/gradle";
+    GNUPGHOME= xdg.dataHome + "/gnupg";
+    GRADLE_USER_HOME= xdg.dataHome + "/gradle";
     KDEHOME="$XDG_CONFIG_HOME/kde";
-    NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history";
+    NODE_REPL_HISTORY= xdg.dataHome + "/node_repl_history";
     NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc";
-    DVDCSS_CACHE="$XDG_DATA_HOME/dvdcss";
+    DVDCSS_CACHE= xdg.dataHome + "/dvdcss";
     NUGET_PACKAGES="$XDG_CACHE_HOME/NuGetPackages";
     _JAVA_OPTIONS="-Djava.util.prefs.userRoot=\"$XDG_CONFIG_HOME\"/java";
     BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle";
     BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle";
-    BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle";
+    BUNDLE_USER_PLUGIN= xdg.dataHome + "/bundle";
     XINITRC="$XDG_CONFIG_HOME/X11/xinitrc";
     #ZDOTDIR="$HOME/.config/zsh";
     HISTFILE="$XDG_STATE_HOME/zsh/history";
-    GOPATH="$XDG_DATA_HOME/go";
-    GEM_HOME="$XDG_DATA_HOME/gem";
+    GOPATH= xdg.dataHome + "/go";
+    GEM_HOME= xdg.dataHome + "/gem";
     GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem";
     GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc";
   };
@@ -134,6 +134,12 @@
   programs.keepassxc.enable = true;
 
   ############################################################
+  # Documents, Notes and Productivity
+  ############################################################
+
+  programs.obsidian.enable = true;
+
+  ############################################################
   # File sharing
   ############################################################
 
@@ -188,6 +194,18 @@
     imagemagick
     inkscape
     krita
+    mediainfo-gui
+    mediainfo
+
+    # Communication
+    discord
+
+    # Gaming
+    protonup-qt
+
+    # Reverse Engineering
+    ghidra
+    imhex
 
     # Utilities
     ripgrep
@@ -196,6 +214,8 @@
     htop
     screen
     rdiff-backup
+    sqlitebrowser
+    
     # Archives
     unzip
     p7zip
