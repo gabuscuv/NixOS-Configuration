@@ -121,6 +121,7 @@
       video-sync="display-resample";
       screenshot-directory="~/Pictures/mpv-screenshots/";
     };
+  };
 
   programs.youtube-dl.enable = true;
 
