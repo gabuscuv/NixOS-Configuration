@@ -95,6 +95,7 @@
   ## System Packages (minimal) || Avoid install
   environment.systemPackages = with pkgs; [
     alvr
+    duperemove
     vulkan-tools
     steam-run
     git
@@ -127,6 +128,9 @@
   };
 
   networking.firewall.trustedInterfaces = [ "virbr0" ];
+
+  # Misc
+  services.hardware.openrgb.enable = true;
 
   # Android // TODO! | FIXME!
   #services.udev.packages = with pkgs; [

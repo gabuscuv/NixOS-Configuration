@@ -7,5 +7,5 @@
     #./gpus/maxwell.nix
   ];
 
-  networking.hostName = "generic-virt";
+  networking.hostName = "generic-libvirt";
 }

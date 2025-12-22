@@ -1,0 +1,20 @@
+{ pkgs ? import <nixpkgs> {} }:
+
+pkgs.mkShell {
+  name = "cpp-dev-shell";
+
+  buildInputs = with pkgs; [
+    gcc
+    gdb
+    cmake
+    ninja
+    pkg-config
+    clang-tools
+    valgrind
+  ];
+
+  shellHook = ''
+    echo "🛠️  C++ development shell"
+    echo "Compiler: $(g++ --version | head -n1)"
+  '';
+}

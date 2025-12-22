@@ -34,7 +34,7 @@
     wget = "wget --hsts-file=\"$XDG_DATA_HOME/wget-hsts\"";
   };
 
-  home.sessionVariables = {
+  home.sessionVariables = rec {
     # PATH=$PATH:$HOME/.local/bin:$HOME/.dotnet:$HOME/.npm-global/bin:/var/lib/flatpak/exports/bin:$GEM_HOME/ruby/2.7.0/bin:$HOME/.dotnet/tools:$GOPATH/bin;
     # WINE Stuff
     WINEPREFIX="$XDG_DATA_HOME/wine";
@@ -74,7 +74,7 @@
     BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundle";
     BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundle";
     XINITRC="$XDG_CONFIG_HOME/X11/xinitrc";
-    ZDOTDIR="$HOME/.config/zsh";
+    #ZDOTDIR="$HOME/.config/zsh";
     HISTFILE="$XDG_STATE_HOME/zsh/history";
     GOPATH="$XDG_DATA_HOME/go";
     GEM_HOME="$XDG_DATA_HOME/gem";
@@ -100,6 +100,39 @@
   };
 
   ############################################################
+  # Multimedia
+  ############################################################
+  
+  services.easyeffects.enable = true;
+  
+  programs.pavucontrol.enable = true;
+
+  programs.mpv = {
+    enable = true;
+    enableYoutubeDl = true;
+    config = {
+      profile = "gpu-hq";
+      scale="ewa_lanczossharp";
+      cscale="ewa_lanczossharp";
+      dscale="ewa_lanczossharp";
+
+      interpolation="yes";
+      tscale="oversample";
+      video-sync="display-resample";
+      screenshot-directory="~/Pictures/mpv-screenshots/";
+    };
+
+  programs.youtube-dl.enable = true;
+
+  programs.obs-studio.enable = true;
+
+  ############################################################
+  # Security and Integration
+  ############################################################
+
+  programs.keepassxc.enable = true;
+
+  ############################################################
   # File sharing
   ############################################################
 
@@ -114,17 +147,12 @@
   # CLI Tools
   ############################################################
   home.packages = with pkgs; [
-    # Editors
-    vscode
-
     # Game Engines
     godot_4-mono
     unityhub
 
     # C / C++
     gcc
-    #clang # Use in shell envioriments
-    #clang-tools # Use in shell envioriments
     gdb
     cmake
     meson
@@ -141,11 +169,7 @@
     pnpm
 
     android-tools
-    #android-sdk ## TODO | FIXME
-    #android-ndk ## TODO | FIXME
-    #gradle  # Use in shell envioriments
     jdk17
-    #jdk11  # Use in shell envioriments
 
     # Graphics / GameDev
     blender
@@ -155,15 +179,21 @@
     glm
 
     # Multimedia
+    audacity
     gimp
-    mpv
+    davinci-resolve
     feh
+    ffmpeg
+    imagemagick
+    inkscape
+    krita
 
     # Utilities
     ripgrep
     fd
     htop
-    tmux
+    screen
+    rdiff-backup
     unzip
 
     # Virtualization
@@ -176,6 +206,13 @@
     virtio-win
     swtpm
 
+    ## KDE Stuff
+    wallpaper-engine-kde-plugin
+
+    ## Guitar
+    # Utils
+    guitarix
+    tuxguitar
     # Rocksmith 2014 / WineASIO
     helvum # Lets you view pipewire graph and connect IOs
   ];
