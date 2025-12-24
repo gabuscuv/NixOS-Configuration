@@ -34,7 +34,7 @@
           }
         ];
       };
-    nixosConfigurations.laptop =
+    nixosConfigurations.Victoriqu3 =
       nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
