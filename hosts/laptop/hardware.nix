@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
-  
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  # Not required if you are using NetworkManager
+  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   
   ############################################################
   # CPU / Power (Laptop)
