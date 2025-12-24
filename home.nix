@@ -278,7 +278,7 @@
     profiles ={
       default = {
         userSettings = {
-          "git.autofetch": true;
+          "git.autofetch" = true;
           "editor.formatOnSave" = true;
           "cmake.configureOnOpen" = true;
         };
