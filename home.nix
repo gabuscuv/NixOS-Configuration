@@ -199,6 +199,7 @@
 
     # Communication
     discord
+    telegram-desktop
 
     # Gaming
     protonup-qt
@@ -311,5 +312,10 @@
   ############################################################
   # Desktop Integration
   ############################################################
-  
+
+  services.kdeconnect = {
+    enable = true;
+    indicator = true;
+  };
+
 }
