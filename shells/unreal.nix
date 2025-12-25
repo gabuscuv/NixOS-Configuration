@@ -1,27 +1,80 @@
 { pkgs }:
 
-pkgs.mkShell {
-  name = "unreal-engine-shell";
+pkgs.buildFHSEnv {
+    name = "UnrealEditor";
+  targetPkgs = pkgs:
+      (with pkgs; [
+        udev
+        alsa-lib
+        mono
+        dotnet-sdk
+        stdenv
+        clang_20
+        icu
+        openssl
+        zlib
+        sdl3
+        sdl3.dev
+        sdl3-image
+        sdl3-ttf
+        vulkan-loader
+        vulkan-tools
+        vulkan-validation-layers
+        glib
+        libxkbcommon
+        nss
+        nspr
+        atk
+        mesa
+        dbus
+        pango
+        cairo
+        libpulseaudio
+        libGL
+        libgbm
+        expat
+        libdrm
+        dotnet-sdk_8
+        jdk11
+        android-sdk
+        android-ndk
+        vulkan-loader
+        vulkan-tools
+        wayland
+        git
+        git-lfs
+      ])
+      ++ (with pkgs.xorg; [
+        libICE
+        libSM
+        libX11
+        libxcb
+        libXcomposite
+        libXcursor
+        libXdamage
+        libXext
+        libXfixes
+        libXi
+        libXrandr
+        libXrender
+        libXScrnSaver
+        libxshmfence
+        libXtst
+      ]);
 
-  packages = with pkgs; [
-    clang
-    lld
-    cmake
-    ninja
-    mono
-    dotnet-sdk_8
-    jdk11
-    android-sdk
-    android-ndk
-    vulkan-loader
-    vulkan-tools
-    git
-    git-lfs
-  ];
+    runScript = currentShell;
 
-  shellHook = ''
-    export UE_SDKS_ROOT=$PWD/.ue-sdks
-    export JAVA_HOME=${pkgs.jdk11}
-    echo "🎮 Unreal Engine devShell loaded"
-  '';
-}
+    NIX_LD_LIBRARY_PATH = lib.makeLibraryPath ([
+        stdenv
+      ]
+      ++ deps);
+    NIX_LD = "${stdenv.cc.libc_bin}/bin/ld.so";
+    nativeBuildInputs = deps;
+
+    profile = ''
+      export FHS_CURRENT="${currentFHS}"
+      export DOTNET_ROOT="${dotnetPkg}"
+      export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+    ''; # + lib.strings.concatStrings (lib.attrsets.mapAttrsToList (name: value: ''export ${name}="${value}"'') userEnv);
+  }.env
+
