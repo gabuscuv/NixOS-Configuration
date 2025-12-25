@@ -144,9 +144,36 @@ boot = {
   programs.nix-ld.enable = true;
 
   # AppImage support, Needed for FMOD Studio and other apps
-  programs.appimage.enable = true;
-  programs.appimage.binfmt = true;
-  
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+    package = pkgs.appimage-run.override { 
+      extraPkgs = pkgs:
+        (with pkgs; [
+          libxau
+        ] 
+        )
+        ++ (with pkgs.xorg; [
+          libICE
+          libSM
+          libX11
+          libxcb
+          libXcomposite
+          libXcursor
+          libxkbfile
+          libXdamage
+          libXext
+          libXfixes
+          libXi
+          libXrandr
+          libXrender
+          libXScrnSaver
+          libxshmfence
+          libXtst
+        ]);
+      };
+  };
+
   ## Virtualisation
   virtualisation.libvirtd = {
   enable = true;
