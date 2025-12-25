@@ -1,5 +1,21 @@
 { pkgs }:
-
+let
+  stdenv = pkgs.llvmPackages_20.stdenv;
+  lib = pkgs.lib;
+  dotnetPkg = with pkgs.dotnetCorePackages;
+    combinePackages [
+      sdk_8_0
+    ];
+  deps = with pkgs; [
+    zlib
+    zlib.dev
+    openssl
+    dotnetPkg
+  ];
+  # userEnv = lib.attrsets.mergeAttrsList ([] ++ (lib.optional (builtins.pathExists ./env.nix) (import ./env.nix)));
+  currentShell = builtins.getEnv "SHELL";
+  currentFHS = builtins.getEnv "FHS_CURRENT";
+in
 pkgs.buildFHSEnv {
     name = "UnrealEditor";
   targetPkgs = pkgs:
