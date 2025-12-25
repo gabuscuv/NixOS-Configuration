@@ -78,7 +78,11 @@ in
         libXtst
       ]);
 
-    runScript = currentShell;
+    runScript = "zsh";
+
+    extraBwrapArgs = [
+      "--bind-try /etc/nixos /etc/nixos"
+    ];
 
     NIX_LD_LIBRARY_PATH = lib.makeLibraryPath ([
         stdenv
