@@ -114,6 +114,7 @@
     enable = true;
     remotePlay.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
+    rocksmithPatch.enable = true;
   };
 
   # Unreal Engine binaries
@@ -139,6 +140,7 @@
   services.hardware.openrgb.enable = true;
 
   # Android // TODO! | FIXME!
+  programs.adb.enable = true;
   #services.udev.packages = with pkgs; [
   #android-udev-rules
   #];
