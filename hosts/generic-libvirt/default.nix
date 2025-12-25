@@ -1,6 +1,7 @@
 {
   imports = [
     ./hardware.nix
+    ./hardware-configuration.nix
     ##./gpus/rdna4.nix
     ## Virtualized eGPU
     #./gpus/turing.nix
