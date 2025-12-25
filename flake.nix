@@ -37,6 +37,7 @@
     nixosConfigurations.Victoriqu3 =
       nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = {inherit inputs;};
         modules = [
           inputs.nixos-rocksmith.nixosModules.default
           ./configuration.nix
