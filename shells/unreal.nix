@@ -1,5 +1,4 @@
-{ pkgs }:
-let
+{pkgs ? import <nixpkgs> {}}: let
   stdenv = pkgs.llvmPackages_20.stdenv;
   lib = pkgs.lib;
   dotnetPkg = with pkgs.dotnetCorePackages;
@@ -16,7 +15,8 @@ let
   currentShell = builtins.getEnv "SHELL";
   currentFHS = builtins.getEnv "FHS_CURRENT";
 in
-pkgs.buildFHSEnv {
+(
+  pkgs.buildFHSEnv {
     name = "UnrealEditor";
   targetPkgs = pkgs:
       (with pkgs; [
@@ -52,8 +52,8 @@ pkgs.buildFHSEnv {
         libdrm
         dotnet-sdk_8
         jdk11
-        android-sdk
-        android-ndk
+        #android-sdk
+        #android-ndk
         vulkan-loader
         vulkan-tools
         wayland
@@ -92,5 +92,6 @@ pkgs.buildFHSEnv {
       export DOTNET_ROOT="${dotnetPkg}"
       export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
     ''; # + lib.strings.concatStrings (lib.attrsets.mapAttrsToList (name: value: ''export ${name}="${value}"'') userEnv);
-  }.env
+  }
+).env
 
