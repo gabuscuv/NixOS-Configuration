@@ -7,16 +7,16 @@
 }:
 let
   ## Unity Android Development / VR Untethered Development
-  androidVersion = "34.0.0";
+  androidVersion = "36.0.0";
   androidSdk =
   (pkgs.androidenv.composeAndroidPackages {
-    platformVersions= ["34"];
-    cmdLineToolsVersion= "6.0";
+    platformVersions= ["36"];
+    cmdLineToolsVersion= "16.0";
     includeNDK=true;
-    ndkVersion="23.1.7779620"; # r23b
+    ndkVersion="27.2.12479018"; # r27c
     cmakeVersions = ["3.22.1"];
-    # it supposed to be 34.0.0 but... set it to lowest available to avoid broken dependencies
-    platformToolsVersion = "35.0.1";    buildToolsVersions = [androidVersion];
+    platformToolsVersion = androidVersion;
+    buildToolsVersions = [androidVersion];
   }).androidsdk;
 in
 pkgs.mkShell {
@@ -24,14 +24,14 @@ pkgs.mkShell {
 
   packages = with pkgs; [
     unityhub
-    jdk11
+    jdk17
     gradle
     dotnet-sdk_8
   ];
 
   shellHook = ''
     export ANDROID_SDK_ROOT=${androidSdk}
-    export JAVA_HOME=${pkgs.jdk11}
+    export JAVA_HOME=${pkgs.jdk17}
     echo "🔷 Unity devShell loaded"
   '';
 }
