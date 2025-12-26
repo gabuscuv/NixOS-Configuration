@@ -49,6 +49,16 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
+  fileSystems."/tmp" = {
+    fsType = "tmpfs";
+    options = [ "size=4G" ];
+  };
+
+  fileSystems."/var/tmp" = {
+    fsType = "tmpfs";
+    options = [ "size=2G" ];
+  };
+
   swapDevices = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

@@ -6,8 +6,6 @@ pkgs.mkShell {
   packages = with pkgs; [
     godot_4-mono
     dotnet-sdk_8
-    android-sdk
-    android-ndk
     jdk17
     scons
     pkg-config
