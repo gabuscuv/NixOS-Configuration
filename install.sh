@@ -1,8 +1,7 @@
 #!/bin/sh
 set -e
 ## STAGE 1 for Low Memory NixOS Installations
-
-DEVICE_NAME="vda"
+DEVICE_NAME=${DEVICE_NAME:-"vda"}
 ROOTHEAD=/tmp/config
 NIX_DIRECTORY=$ROOTHEAD/etc/nixos
 STAGE1_DIR=$NIX_DIRECTORY/stage1-bootstrap
@@ -42,5 +41,6 @@ NIX_DIRECTORY=$ROOTHEAD/etc/nixos
 
 rsync -rvP $PWD/* $NIX_DIRECTORY
 
-nixos-generate-config --root $ROOTHEAD
+## Not Required if you are using (previous) flakes
+#nixos-generate-config --root $ROOTHEAD
 nixos-install --root /mnt/nixos --flake $NIX_DIRECTORY#${SELECTED_HOST} --option accept-flake-config true

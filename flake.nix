@@ -37,6 +37,7 @@
         inherit system;
         specialArgs = {inherit inputs;};
         modules = [
+          inputs.nixos-rocksmith.nixosModules.default
           ./configuration.nix
           ./hosts/generic-libvirt
           home-manager.nixosModules.home-manager
