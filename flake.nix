@@ -17,7 +17,13 @@
   outputs = { self, nixpkgs, home-manager, disko, ... }@inputs:
   let
     system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; };
+    pkgs = import nixpkgs { 
+      inherit system; 
+      config = {
+        allowUnfree = true;
+        android_sdk.accept_license = true;
+      };
+    };
   in {
     nixosConfigurations.generic-libvirt =
       nixpkgs.lib.nixosSystem {
