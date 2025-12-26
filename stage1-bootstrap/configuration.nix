@@ -1,7 +1,5 @@
 { config, pkgs, ... }:
 {
-  nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
