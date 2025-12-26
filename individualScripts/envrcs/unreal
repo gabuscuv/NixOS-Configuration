@@ -1,0 +1,4 @@
+#!/bin/sh
+if [ [ "$FHS_CURRENT" != "$1" ] ] 2> /dev/null; then
+    use flake /etc/nixos/shells#unreal;
+fi

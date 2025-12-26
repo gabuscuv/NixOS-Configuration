@@ -21,6 +21,14 @@
     };
   };
 
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv = {
+      enable = true;
+    };
+  };
+
   home.shellAliases = {
     virsh = "virsh -c qemu:///system";
     gitpro = "GIT_SSH_COMMAND='ssh -i ~/.ssh/id_rsa_pro -F /dev/null' git";
@@ -59,8 +67,6 @@
     XDG_RUNTIME_DIR="/run/user/$UID";
 
     ## XDG Derivated
-    ANDROID_HOME="$HOME/Android/Sdk";
-    NDK_ROOT="$ANDROID_HOME/Sdk/ndk";
     CUDA_CACHE_PATH="${config.xdg.cacheHome}/nv";
     GNUPGHOME="${config.xdg.dataHome}/gnupg";
     GRADLE_USER_HOME="${config.xdg.dataHome}/gradle";
