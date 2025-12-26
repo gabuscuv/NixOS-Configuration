@@ -41,6 +41,6 @@ NIX_DIRECTORY=$ROOTHEAD/etc/nixos
 
 rsync -rvP $PWD/* $NIX_DIRECTORY
 
-## Not Required if you are using (previous) flakes
-#nixos-generate-config --root $ROOTHEAD
+nixos-generate-config --root $ROOTHEAD
+mv $NIX_DIRECTORY/hardware-configuration.nix $NIX_DIRECTORY/hosts/$SELECTED_HOST/hardware-configuration.nix
 nixos-install --root /mnt/nixos --flake $NIX_DIRECTORY#${SELECTED_HOST} --option accept-flake-config true
