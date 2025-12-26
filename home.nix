@@ -30,16 +30,17 @@
   };
 
   home.shellAliases = {
+    cls = "clear";
     virsh = "virsh -c qemu:///system";
     gitpro = "GIT_SSH_COMMAND='ssh -i ~/.ssh/id_rsa_pro -F /dev/null' git";
     duperemove="duperemove --hashfile=$HOME/deduperhash.db";
-    upgrade="nix flake update --flake /etc/nixos#$HOST";
+    upgrade="nix flake update && nixos-rebuild switch";
     # Wine Stuff
     wine64 = "WINEPREFIX=\"$WINEPREFIX\" WINEARCH=win64 wine64";
     wine32 = "WINEPREFIX=\"$WINEPREFIX32\" WINEARCH=win32 wine";
     wine = "wine64";
     ## XDG
-    wget = "wget --hsts-file=\"$XDG_DATA_HOME/wget-hsts\"";
+    wget = "wget --hsts-file=\"${config.xdg.dataHome}/wget-hsts\"";
   };
 
   home.sessionVariables = rec {
@@ -70,22 +71,22 @@
     CUDA_CACHE_PATH="${config.xdg.cacheHome}/nv";
     GNUPGHOME="${config.xdg.dataHome}/gnupg";
     GRADLE_USER_HOME="${config.xdg.dataHome}/gradle";
-    KDEHOME="$XDG_CONFIG_HOME/kde";
+    KDEHOME="${config.xdg.configHome}/kde";
     NODE_REPL_HISTORY="${config.xdg.dataHome}/node_repl_history";
-    NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc";
+    NPM_CONFIG_USERCONFIG="${config.xdg.configHome}/npm/npmrc";
     DVDCSS_CACHE="${config.xdg.dataHome}/dvdcss";
     NUGET_PACKAGES="${config.xdg.cacheHome}/NuGetPackages";
-    _JAVA_OPTIONS="-Djava.util.prefs.userRoot=\"$XDG_CONFIG_HOME\"/java";
-    BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundle";
+    _JAVA_OPTIONS="-Djava.util.prefs.userRoot=\"${config.xdg.configHome}\"/java";
+    BUNDLE_USER_CONFIG="${config.xdg.configHome}/bundle";
     BUNDLE_USER_CACHE="${config.xdg.cacheHome}/bundle";
     BUNDLE_USER_PLUGIN="${config.xdg.dataHome}/bundle";
-    XINITRC="$XDG_CONFIG_HOME/X11/xinitrc";
+    XINITRC="${config.xdg.configHome}/X11/xinitrc";
     #ZDOTDIR="$HOME/.config/zsh";
     HISTFILE="${config.xdg.stateHome}/zsh/history";
     GOPATH="${config.xdg.dataHome}/go";
     GEM_HOME="${config.xdg.dataHome}/gem";
     GEM_SPEC_CACHE="${config.xdg.cacheHome}/gem";
-    GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc";
+    GTK2_RC_FILES="${config.xdg.configHome}/gtk-2.0/gtkrc";
   };
 
   ############################################################
