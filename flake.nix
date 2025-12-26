@@ -1,7 +1,14 @@
 {
   
   inputs = {
-  
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+
+    # Home Manager
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";  # Follows stable nixpkgs by default
+    };
+
     nixos-hardware = {
       url = "github:gabuscuv/nixos-hardware/15ahp10";
     };
@@ -14,7 +21,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, disko, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs { 
