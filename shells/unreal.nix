@@ -17,9 +17,9 @@ let
   androidSdk =
   (pkgs.androidenv.composeAndroidPackages {
     platformVersions= ["33"];
-    cmakeVersions = ["3.22.1"];
     includeNDK=true;
     ndkVersion="25.1.8937393";
+    cmakeVersions = ["3.22.1"];
     # it supposed to be 33.0.2 but... set it to lowest available to avoid broken dependencies
     platformToolsVersion = "35.0.1";
     buildToolsVersions = [androidVersion];

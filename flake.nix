@@ -91,9 +91,10 @@
       unreal  = import ./shells/unreal.nix  { inherit pkgs; };
       godot   = import ./shells/godot.nix   { inherit pkgs; };
       unity   = import ./shells/unity.nix   { inherit pkgs; };
+      unity6  = import ./shells/unity6.nix  { inherit pkgs; };
       android = import ./shells/android.nix { inherit pkgs; };
-      cpp     = import ./shells/cpp.nix { inherit pkgs; };
-      node    = import ./shells/node.nix { inherit pkgs;};
+      cpp     = import ./shells/cpp.nix     { inherit pkgs; };
+      node    = import ./shells/node.nix    { inherit pkgs;};
     };
   };
 }
