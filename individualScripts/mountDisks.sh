@@ -1,5 +1,6 @@
 #!/bin/sh
-DEVICE_NAME= $DEVICE_NAME || "vda"
+DEVICE_NAME= ${DEVICE_NAME:-"vda"}
+SELECTED_HOST=${SELECTED_HOST:-"generic-libvirt"}
 
 echo "NixOS installation for host ${SELECTED_HOST} completed."
 mkdir -p /mnt/nixos
