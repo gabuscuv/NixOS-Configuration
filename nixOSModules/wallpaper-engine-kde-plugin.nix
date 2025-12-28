@@ -1,80 +1,89 @@
-{ config, lib, pkgs, ...}:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-let 
+let
   # References: https://github.com/xerhaxs/nixos/blob/main/nixosModules/pkgs/wallpaper-engine-kde-plugin.nix and https://discourse.nixos.org/t/wallpaper-engine-on-nixos-wallpaper-engine-kde-plugin/19744/25
-  glslang-submodule = with pkgs; stdenv.mkDerivation {
-    name = "glslang";
-    installPhase = ''
-      mkdir -p $out
-    '';
-    src = fetchFromGitHub {
-      owner = "KhronosGroup";
-      repo = "glslang";
-      rev = "c34bb3b6c55f6ab084124ad964be95a699700d34";
-      sha256 = "IMROcny+b5CpmzEfvKBYDB0QYYvqC5bq3n1S4EQ6sXc=";
+  glslang-submodule =
+    with pkgs;
+    stdenv.mkDerivation {
+      name = "glslang";
+      installPhase = ''
+        mkdir -p $out
+      '';
+      src = fetchFromGitHub {
+        owner = "KhronosGroup";
+        repo = "glslang";
+        rev = "c34bb3b6c55f6ab084124ad964be95a699700d34";
+        sha256 = "IMROcny+b5CpmzEfvKBYDB0QYYvqC5bq3n1S4EQ6sXc=";
+      };
     };
-  };
 
-  wallpaper-engine-kde-plugin = with pkgs; stdenv.mkDerivation rec {
-    pname = "wallpaperEngineKde";
-    version = "96230de92f1715d3ccc5b9d50906e6a73812a00a";
-    src = fetchFromGitHub {
-      owner = "Jelgnum";
-      repo = "wallpaper-engine-kde-plugin";
-      rev = version;
-      hash = "sha256-vkWEGlDQpfJ3fAimJHZs+aX6dh/fLHSRy2tLEsgu/JU=";
-      fetchSubmodules = true;
-        };
+  wallpaper-engine-kde-plugin =
+    with pkgs;
+    stdenv.mkDerivation rec {
+      pname = "wallpaperEngineKde";
+      version = "96230de92f1715d3ccc5b9d50906e6a73812a00a";
+      src = fetchFromGitHub {
+        owner = "Jelgnum";
+        repo = "wallpaper-engine-kde-plugin";
+        rev = version;
+        hash = "sha256-vkWEGlDQpfJ3fAimJHZs+aX6dh/fLHSRy2tLEsgu/JU=";
+        fetchSubmodules = true;
+      };
 
-    nativeBuildInputs = [
-      cmake
-      kdePackages.extra-cmake-modules
-      glslang-submodule
-      pkg-config
-      gst_all_1.gst-libav
-      shaderc
-      ninja
-    ];
+      nativeBuildInputs = [
+        cmake
+        kdePackages.extra-cmake-modules
+        glslang-submodule
+        pkg-config
+        gst_all_1.gst-libav
+        shaderc
+        ninja
+      ];
 
-    buildInputs = [
-      mpv
-      lz4
-      vulkan-headers
-      vulkan-tools
-      vulkan-loader
-    ] 
-    ++ (with kdePackages; [
-      qtbase
-      qtsvg
-      qtwayland
-      qtdeclarative
-      qttools
-      qtwebsockets
-      qtwebengine
-      qtwebchannel
-      qtmultimedia
-      kpackage
-      kdeclarative
-      libplasma
-    ])
-    ++ [(python3.withPackages (python-pkgs: [ python-pkgs.websockets ]))];
+      buildInputs = [
+        mpv
+        lz4
+        vulkan-headers
+        vulkan-tools
+        vulkan-loader
+      ]
+      ++ (with kdePackages; [
+        qtbase
+        qtsvg
+        qtwayland
+        qtdeclarative
+        qttools
+        qtwebsockets
+        qtwebengine
+        qtwebchannel
+        qtmultimedia
+        kpackage
+        kdeclarative
+        libplasma
+      ])
+      ++ [ (python3.withPackages (python-pkgs: [ python-pkgs.websockets ])) ];
 
-    cmakeFlags = [ "-DUSE_PLASMAPKG=OFF" ];
-    dontWrapQtApps = true;
+      cmakeFlags = [ "-DUSE_PLASMAPKG=OFF" ];
+      dontWrapQtApps = true;
 
-    postPatch = ''
-      rm -rf src/backend_scene/third_party/glslang
-      ln -s ${glslang-submodule.src} src/backend_scene/third_party/glslang
-    '';
-    #Optional informations
-    meta = with lib; {
-      description = "Wallpaper Engine KDE plasma plugin";
-      homepage = "https://github.com/Jelgnum/wallpaper-engine-kde-plugin";
-      license = licenses.gpl2Plus;
-      platforms = platforms.linux;
+      postPatch = ''
+        rm -rf src/backend_scene/third_party/glslang
+        ln -s ${glslang-submodule.src} src/backend_scene/third_party/glslang
+      '';
+      #Optional informations
+      meta = with lib; {
+        description = "Wallpaper Engine KDE plasma plugin";
+        homepage = "https://github.com/Jelgnum/wallpaper-engine-kde-plugin";
+        license = licenses.gpl2Plus;
+        platforms = platforms.linux;
+      };
     };
-  };
-in 
+in
 
 {
   options.nixos = {

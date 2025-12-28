@@ -1,26 +1,29 @@
 { config, pkgs, ... }:
 {
 
-  imports =
-    [ # Include the results of the hardware scan.
-      ./nixOSModules/wallpaper-engine-kde-plugin.nix  # Or another path to the file
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./nixOSModules/wallpaper-engine-kde-plugin.nix # Or another path to the file
+  ];
 
   nixos.pkgs = {
-      wallpaper-engine-kde-plugin.enable = false;
-    };
+    wallpaper-engine-kde-plugin.enable = false;
+  };
 
   system.stateVersion = "25.11";
   boot.kernelPackages = pkgs.linuxPackages_6_18;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
   ## Boot
-boot = {
-  loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
-  };    
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
     plymouth = {
       enable = true;
     };
@@ -40,7 +43,7 @@ boot = {
     # It will just not appear on screen unless a key is pressed
     loader.timeout = 0;
 
-};
+  };
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -88,7 +91,6 @@ boot = {
   services.desktopManager.plasma6.enable = true;
   programs.kdeconnect.enable = true;
 
-
   ## Audio
   services.pipewire = {
     enable = true;
@@ -105,25 +107,24 @@ boot = {
     isNormalUser = true;
     description = "Gaby Bustillo del Cuvillo";
     shell = pkgs.zsh;
-    extraGroups = [ 
-      "networkmanager" 
-      "wheel" 
-      "adbusers" 
-      "audio" 
-      "video" 
-      "input" 
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "adbusers"
+      "audio"
+      "video"
+      "input"
       # virtualisation
       "libvirtd"
       "kvm"
       # Rocksmith 2014 / WineASIO
       "rtkit"
-      ];
+    ];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  
   ## System Packages (minimal) || Avoid install
   environment.systemPackages = with pkgs; [
     alvr
@@ -136,10 +137,10 @@ boot = {
     curl
     rtaudio
   ];
-  
+
   ## Gamemode
   programs.gamemode.enable = true;
-    
+
   ## Steam / VR
   programs.steam = {
     enable = true;
@@ -155,12 +156,12 @@ boot = {
   programs.appimage = {
     enable = true;
     binfmt = true;
-    package = pkgs.appimage-run.override { 
-      extraPkgs = pkgs:
+    package = pkgs.appimage-run.override {
+      extraPkgs =
+        pkgs:
         (with pkgs; [
           libxau
-        ] 
-        )
+        ])
         ++ (with pkgs.xorg; [
           libICE
           libSM
@@ -179,13 +180,13 @@ boot = {
           libxshmfence
           libXtst
         ]);
-      };
+    };
   };
 
   ## Virtualisation
   virtualisation.libvirtd = {
-  enable = true;
-  qemu = {
+    enable = true;
+    qemu = {
       package = pkgs.qemu_kvm;
       runAsRoot = false;
       swtpm.enable = true;
@@ -203,5 +204,3 @@ boot = {
   #android-udev-rules
   #];
 }
-
-  

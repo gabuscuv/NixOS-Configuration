@@ -20,11 +20,21 @@
           content = {
             type = "btrfs";
             subvolumes = {
-              "@" = { mountpoint = "/"; };
-              "@home" = { mountpoint = "/home"; };
-              "@nix" = { mountpoint = "/nix"; };
-              "@log" = { mountpoint = "/var/log"; };
-              "@snapshots" = { mountpoint = "/.snapshots"; };
+              "@" = {
+                mountpoint = "/";
+              };
+              "@home" = {
+                mountpoint = "/home";
+              };
+              "@nix" = {
+                mountpoint = "/nix";
+              };
+              "@log" = {
+                mountpoint = "/var/log";
+              };
+              "@snapshots" = {
+                mountpoint = "/.snapshots";
+              };
             };
           };
         };
