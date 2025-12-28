@@ -188,6 +188,9 @@
     yarn
     pnpm
 
+    # Basic Python
+    python3Minimal
+
     android-tools
     jdk17
 
@@ -247,7 +250,6 @@
     swtpm
 
     ## KDE Stuff
-    kdePackages.wallpaper-engine-plugin
 
     ## Guitar
     # Utils

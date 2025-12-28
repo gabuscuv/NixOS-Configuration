@@ -3,7 +3,12 @@
 
   imports =
     [ # Include the results of the hardware scan.
+      ./nixOSModules/wallpaper-engine-kde-plugin.nix  # Or another path to the file
     ];
+
+  nixos.pkgs = {
+      wallpaper-engine-kde-plugin.enable = false;
+    };
 
   system.stateVersion = "25.11";
 
@@ -71,6 +76,8 @@ boot = {
   # Configure console keymap
   console.keyMap = "uk";
 
+  ## Add $HOME/.local/bin in PATH
+  environment.localBinInPath = true;
   ############################################################
   # Desktop (Wayland + KDE)
   ############################################################
