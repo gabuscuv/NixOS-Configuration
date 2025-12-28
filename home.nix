@@ -168,8 +168,21 @@
   ############################################################
   home.packages = with pkgs; [
     # Game Engines
+    (unityhub.override {
+      extraLibs = pkgs:
+        with pkgs; [
+          # Without this, the vulkan libs will not be found -> no vulkan
+          # renderer in unity (required for HDRP)
+          vulkan-loader
+
+          # Pre 2022.3 versions require this:
+          # openssl_1_1
+
+          # To ensure unity finds VS Code in its path
+          vscode
+        ];
+    })
     godot_4-mono
-    unityhub
 
     # C / C++
     gcc
