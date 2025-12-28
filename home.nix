@@ -239,6 +239,7 @@
 
     # Utilities
     wineWowPackages.full
+    nixfmt-rfc-style
     ripgrep
     lm_sensors
     fd
@@ -312,7 +313,16 @@
           "cmake.configureOnOpen" = true;
         };
         extensions = with pkgs.vscode-extensions; [
-            ms-dotnettools.csharp
+          eamodio.gitlens
+        ];
+      };
+      cpp = {
+        userSettings = {
+          "git.autofetch" = true;
+          "editor.formatOnSave" = true;
+          "cmake.configureOnOpen" = true;
+        };
+        extensions = with pkgs.vscode-extensions; [
             ms-vscode.cpptools
             ms-vscode.cmake-tools
             # ms-vscode.vscode-typescript-next ## TODO | FIXME
@@ -320,6 +330,94 @@
             eamodio.gitlens
             # ms-vscode.unreal-engine ## TODO | FIXME
           ];
+      };
+      dotnet = {
+        userSettings = {
+          "git.autofetch" = true;
+          "editor.formatOnSave" = true;
+          "cmake.configureOnOpen" = true;
+        };
+        extensions = with pkgs.vscode-extensions; [
+          ms-dotnettools.csharp
+          ms-dotnettools.vscode-dotnet-runtime
+          eamodio.gitlens
+        ];
+      };
+      unity = {
+        userSettings = {
+          "git.autofetch" = true;
+          "editor.formatOnSave" = true;
+          "cmake.configureOnOpen" = true;
+        };
+        extensions = with pkgs.vscode-extensions; [
+          ms-dotnettools.csdevkit
+          visualstudiotoolsforunity.vstuc
+          eamodio.gitlens
+        ];
+      };
+      javascript = {
+        userSettings = {
+          "git.autofetch" = true;
+          "editor.formatOnSave" = true;
+          "cmake.configureOnOpen" = true;
+        };
+        extensions = with pkgs.vscode-extensions; [
+          eamodio.gitlens
+          bradlc.vscode-tailwindcss
+          dbaeumer.vscode-eslint
+          esbenp.prettier-vscode
+          visualstudiotoolsforunity.vstuc
+          unifiedjs.vscode-mdx
+          lokalise.i18n-ally
+        ];
+      };
+      vanillascript = {
+        userSettings = {
+          "git.autofetch" = true;
+          "editor.formatOnSave" = true;
+          "cmake.configureOnOpen" = true;
+        };
+        extensions = with pkgs.vscode-extensions; [
+          eamodio.gitlens
+          astro-build.astro-vscode
+        ];
+      };
+      nix = {
+        userSettings = {
+          "git.autofetch" = true;
+          "editor.formatOnSave" = true;
+          "cmake.configureOnOpen" = true;
+        };
+        extensions = with pkgs.vscode-extensions; [
+          eamodio.gitlens
+          jnoortheen.nix-ide
+          mkhl.direnv
+        ];
+      };
+      godot = {
+        userSettings = {
+          "git.autofetch" = true;
+          "editor.formatOnSave" = true;
+          "cmake.configureOnOpen" = true;
+        };
+        extensions = with pkgs.vscode-extensions; [
+          eamodio.gitlens
+          geequlim.godot-tools
+          # neikeq.godot-csharp-vscode # Not included in NixPkg
+        ];
+      };
+      markdown = {
+        userSettings = {
+          "git.autofetch" = true;
+          "editor.formatOnSave" = true;
+          "cmake.configureOnOpen" = true;
+        };
+        extensions = with pkgs.vscode-extensions; [
+          eamodio.gitlens
+          marp-team.marp-vscode
+          yzhang.markdown-all-in-one
+          bierner.github-markdown-preview
+        ];
       };
     };
   };
