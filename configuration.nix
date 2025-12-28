@@ -11,6 +11,7 @@
     };
 
   system.stateVersion = "25.11";
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
