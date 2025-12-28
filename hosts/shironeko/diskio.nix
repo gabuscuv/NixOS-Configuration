@@ -58,7 +58,6 @@
           size = "226.3G";
           content = {
             type = "filesystem";
-            format = "ext4";
             mountpoint = "/var/lib/libvirt/images";
             # CRITICAL: do NOT format
             format = null;
@@ -95,7 +94,6 @@
           size = "512G";
           content = {
             type = "filesystem";
-            format = "ext4";
             mountpoint = "/home/gabuscuv/.virt/Projects";
             # CRITICAL: do NOT format
             format = null;

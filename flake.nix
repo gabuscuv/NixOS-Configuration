@@ -1,18 +1,18 @@
 {
-  
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     # Home Manager
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs";  # Follows stable nixpkgs by default
+      inputs.nixpkgs.follows = "nixpkgs"; # Follows stable nixpkgs by default
     };
 
     nixos-hardware = {
       url = "github:gabuscuv/nixos-hardware/15ahp10";
     };
-    
+
     ## Rocksmith 2014 WineASIO / pipewire
     # A flake providing necessary module `programs.steam.rocksmithPatch`
     nixos-rocksmith = {
@@ -21,21 +21,27 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
-  let
-    system = "x86_64-linux";
-    pkgs = import nixpkgs { 
-      inherit system; 
-      config = {
-        allowUnfree = true;
-        android_sdk.accept_license = true;
-      };
-    };
-  in {
-    nixosConfigurations.generic-libvirt =
-      nixpkgs.lib.nixosSystem {
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs {
         inherit system;
-        specialArgs = {inherit inputs;};
+        config = {
+          allowUnfree = true;
+          android_sdk.accept_license = true;
+        };
+      };
+    in
+    {
+      nixosConfigurations.generic-libvirt = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
         modules = [
           inputs.nixos-rocksmith.nixosModules.default
           ./configuration.nix
@@ -48,10 +54,9 @@
           }
         ];
       };
-    nixosConfigurations.Victoriqu3 =
-      nixpkgs.lib.nixosSystem {
+      nixosConfigurations.Victoriqu3 = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = {inherit inputs;};
+        specialArgs = { inherit inputs; };
         modules = [
           inputs.nixos-rocksmith.nixosModules.default
           ./configuration.nix
@@ -65,44 +70,42 @@
           }
         ];
       };
-      nixosConfigurations.shironeko =
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            inputs.nixos-rocksmith.nixosModules.default
-            ./configuration.nix
-            ./hosts/shironeko
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.gabuscuv = import ./home.nix;
-            }
-          ];
-        };
-      nixosConfigurations.rory =
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            inputs.nixos-rocksmith.nixosModules.default
-            ./configuration.nix
-            ./hosts/rory
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.gabuscuv = import ./home.nix;
-            }
-          ];
-        };
-    devShells.${system} = {
-      unreal  = import ./shells/unreal.nix  { inherit pkgs; };
-      godot   = import ./shells/godot.nix   { inherit pkgs; };
-      unity   = import ./shells/unity.nix   { inherit pkgs; };
-      unity6  = import ./shells/unity6.nix  { inherit pkgs; };
-      android = import ./shells/android.nix { inherit pkgs; };
-      cpp     = import ./shells/cpp.nix     { inherit pkgs; };
-      node    = import ./shells/node.nix    { inherit pkgs;};
+      nixosConfigurations.shironeko = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          inputs.nixos-rocksmith.nixosModules.default
+          ./configuration.nix
+          ./hosts/shironeko
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.gabuscuv = import ./home.nix;
+          }
+        ];
+      };
+      nixosConfigurations.rory = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          inputs.nixos-rocksmith.nixosModules.default
+          ./configuration.nix
+          ./hosts/rory
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.gabuscuv = import ./home.nix;
+          }
+        ];
+      };
+      devShells.${system} = {
+        unreal = import ./shells/unreal.nix { inherit pkgs; };
+        godot = import ./shells/godot.nix { inherit pkgs; };
+        unity = import ./shells/unity.nix { inherit pkgs; };
+        unity6 = import ./shells/unity6.nix { inherit pkgs; };
+        android = import ./shells/android.nix { inherit pkgs; };
+        cpp = import ./shells/cpp.nix { inherit pkgs; };
+        node = import ./shells/node.nix { inherit pkgs; };
+      };
     };
-  };
 }
