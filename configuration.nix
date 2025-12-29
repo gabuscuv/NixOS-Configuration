@@ -151,6 +151,9 @@
 
   # Unreal Engine binaries
   programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    libuuid
+  ];
 
   # AppImage support, Needed for FMOD Studio and other apps
   programs.appimage = {

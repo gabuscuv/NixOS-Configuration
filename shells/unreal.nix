@@ -87,6 +87,7 @@ in
       git-lfs
       ## Tethered VR Development
       openxr-loader
+      libuuid
     ])
     ++ (with pkgs.xorg; [
       libICE

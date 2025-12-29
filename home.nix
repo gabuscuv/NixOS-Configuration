@@ -267,6 +267,9 @@
     virtio-win
     swtpm
 
+    # Some hateful libs
+    libuuid
+
     ## KDE Stuff
 
     ## Guitar
@@ -407,6 +410,8 @@
         extensions = with pkgs.vscode-extensions; [
           eamodio.gitlens
           geequlim.godot-tools
+          ms-dotnettools.csharp
+          ms-dotnettools.vscode-dotnet-runtime
           # neikeq.godot-csharp-vscode # Not included in NixPkg
         ];
       };
