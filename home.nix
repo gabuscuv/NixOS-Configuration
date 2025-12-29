@@ -101,6 +101,33 @@
 
   programs.firefox = {
     enable = true;
+    profiles.default = {
+      id = 0;
+      isDefault = true;
+      extensions = {
+        packages = with pkgs.nur.repos.rycee.firefox-addons; [
+          ublock-origin
+          plasma-integration
+          privacy-badger
+          multi-account-containers
+          stylus
+        ];
+      };
+      containers = {
+        Otha = {
+          id = 1;
+          name = "Otha";
+        };
+        AlterEgo = {
+          id = 2;
+          name = "AlterEgo";
+        };
+      };
+    };
+    profiles.sensitive = {
+      id = 1;
+      isDefault = false;
+    };
     languagePacks = [
       "en-GB"
       "es-ES"
@@ -202,8 +229,7 @@
 
     # Web / Next.js
     nodejs_20
-    yarn
-    pnpm
+    corepack
 
     # Basic Python
     python3Minimal
@@ -271,6 +297,7 @@
     libuuid
 
     ## KDE Stuff
+    kdePackages.plasma-browser-integration
 
     ## Guitar
     # Utils
@@ -447,7 +474,6 @@
   ############################################################
   # Desktop Integration
   ############################################################
-
   services.kdeconnect = {
     enable = true;
     indicator = true;

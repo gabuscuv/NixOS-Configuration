@@ -19,6 +19,8 @@
       url = "github:re1n0/nixos-rocksmith";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nur.url = "github:nix-community/NUR";
   };
 
   outputs =
@@ -26,6 +28,7 @@
       self,
       nixpkgs,
       home-manager,
+      nur,
       ...
     }@inputs:
     let
@@ -36,6 +39,9 @@
           allowUnfree = true;
           android_sdk.accept_license = true;
         };
+        overlays = [
+          inputs.nur.overlay
+        ];
       };
     in
     {
@@ -43,6 +49,7 @@
         inherit system;
         specialArgs = { inherit inputs; };
         modules = [
+          { nixpkgs.overlays = [ inputs.nur.overlays.default ]; }
           inputs.nixos-rocksmith.nixosModules.default
           ./configuration.nix
           ./hosts/generic-libvirt
@@ -58,6 +65,7 @@
         inherit system;
         specialArgs = { inherit inputs; };
         modules = [
+          { nixpkgs.overlays = [ inputs.nur.overlays.default ]; }
           inputs.nixos-rocksmith.nixosModules.default
           ./configuration.nix
           inputs.nixos-hardware.nixosModules.lenovo-legion-15ahp10-oled
@@ -73,6 +81,7 @@
       nixosConfigurations.shironeko = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
+          { nixpkgs.overlays = [ inputs.nur.overlays.default ]; }
           inputs.nixos-rocksmith.nixosModules.default
           ./configuration.nix
           ./hosts/shironeko
@@ -80,6 +89,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            nixpkgs.overlays = [ nur.overlay ];
             home-manager.users.gabuscuv = import ./home.nix;
           }
         ];
@@ -87,6 +97,7 @@
       nixosConfigurations.rory = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
+          { nixpkgs.overlays = [ inputs.nur.overlays.default ]; }
           inputs.nixos-rocksmith.nixosModules.default
           ./configuration.nix
           ./hosts/rory
@@ -94,6 +105,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit nur; };
             home-manager.users.gabuscuv = import ./home.nix;
           }
         ];
