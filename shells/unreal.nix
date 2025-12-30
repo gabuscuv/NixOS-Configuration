@@ -48,41 +48,56 @@ in
   targetPkgs =
     pkgs:
     (with pkgs; [
-      udev
-      alsa-lib
-      mono
       dotnet-sdk
+      mono
+      jdk11
       stdenv
       clang_20
-      icu
-      openssl
+
+      # Base libraries
+      udev
       zlib
-      sdl3
-      sdl3.dev
-      sdl3-image
-      sdl3-ttf
+      openssl
+      icu
+
+      # SDL2 and multimedia
+      SDL2
+      SDL2.dev
+      SDL2_image
+      SDL2_ttf
+      SDL2_mixer
+      #sdl3
+      #sdl3.dev
+      #sdl3-image
+      #sdl3-ttf
+                
+      # Graphics
       vulkan-loader
       vulkan-tools
       vulkan-validation-layers
-      glib
-      libxkbcommon
-      nss
-      nspr
-      atk
+      libGL
+      libdrm
       mesa
+
+      # Audio/Graphics support
+      alsa-lib
+      libpulseaudio
+      libgbm
+      libxkbcommon
+      expat
+      wayland
+
+      # GUI/Windowing
+      glib
       dbus
       pango
       cairo
-      libpulseaudio
-      libGL
-      libgbm
-      expat
-      libdrm
-      dotnet-sdk_8
-      jdk11
-      vulkan-loader
-      vulkan-tools
-      wayland
+      atk
+      gtk3
+      nss
+      nspr
+
+      ## Version Control
       git
       git-lfs
       ## Tethered VR Development
@@ -130,7 +145,13 @@ in
     STUDIO_SDK_PATH="$ANDROID_HOME"
     export ANDROID_USER_HOME="$HOME/.android"
     export ANDROID_AVD_HOME="$HOME/.android/avd"
+    export LIBGL_DRIVERS_PATH="${pkgs.lib.getLib pkgs.mesa}/lib/dri"
+    export EGL_DRIVERS_PATH="${pkgs.lib.getLib pkgs.mesa}/lib/egl"
     export LD_LIBRARY_PATH=/usr/lib:/usr/lib32
+    export LD_LIBRARY_PATH="${pkgs.lib.makeLibraryPath [pkgs.libdrm pkgs.mesa pkgs.libgbm]}:$LD_LIBRARY_PATH"
     export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+
+    # GDB Python pretty-printers
+    export PYTHONPATH="${pkgs.gcc}/share/gcc-${pkgs.gcc.version}/python:$PYTHONPATH"
   ''; # + lib.strings.concatStrings (lib.attrsets.mapAttrsToList (name: value: ''export ${name}="${value}"'') userEnv);
 }).env
