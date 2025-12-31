@@ -100,9 +100,13 @@ in
       ## Version Control
       git
       git-lfs
+      
       ## Tethered VR Development
       openxr-loader
       libuuid
+
+      ## For ANGLE & EGL Troubleshooting
+      ungoogled-chromium
     ])
     ++ (with pkgs.xorg; [
       libICE
@@ -145,8 +149,18 @@ in
     STUDIO_SDK_PATH="$ANDROID_HOME"
     export ANDROID_USER_HOME="$HOME/.android"
     export ANDROID_AVD_HOME="$HOME/.android/avd"
-    export LIBGL_DRIVERS_PATH="${pkgs.lib.getLib pkgs.mesa}/lib/dri"
-    export EGL_DRIVERS_PATH="${pkgs.lib.getLib pkgs.mesa}/lib/egl"
+
+    # See https://gitlab.steamos.cloud/steamrt/steam-runtime-tools/-/blob/main/docs/distro-assumptions.md#graphics-driver
+    export LIBGL_DRIVERS_PATH=/run/opengl-driver/lib/dri:/run/opengl-driver-32/lib/dri
+    export __EGL_VENDOR_LIBRARY_DIRS=/run/opengl-driver/share/glvnd/egl_vendor.d:/run/opengl-driver-32/share/glvnd/egl_vendor.d
+    export LIBVA_DRIVERS_PATH=/run/opengl-driver/lib/dri:/run/opengl-driver-32/lib/dri
+    export VDPAU_DRIVER_PATH=/run/opengl-driver/lib/vdpau:/run/opengl-driver-32/lib/vdpau
+    
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
+    
     export LD_LIBRARY_PATH=/usr/lib:/usr/lib32
     export LD_LIBRARY_PATH="${pkgs.lib.makeLibraryPath [pkgs.libdrm pkgs.mesa pkgs.libgbm]}:$LD_LIBRARY_PATH"
     export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
