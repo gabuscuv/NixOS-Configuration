@@ -38,11 +38,12 @@
         config = {
           allowUnfree = true;
           android_sdk.accept_license = true;
+          overlays = [
+            inputs.nur.overlay
+          ];
         };
-        overlays = [
-          inputs.nur.overlay
-        ];
       };
+
     in
     {
       nixosConfigurations.generic-libvirt = nixpkgs.lib.nixosSystem {

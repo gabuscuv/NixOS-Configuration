@@ -147,6 +147,10 @@
     remotePlay.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
     rocksmithPatch.enable = true;
+    package = pkgs.steam.override {
+      extraLibraries = pkgs': with pkgs'; [ pkgsi686Linux.pipewire.jack ]; # Adds pipewire jack (32-bit)
+      extraPkgs = pkgs': with pkgs'; [ wineasio ]; # Adds wineasio
+    };
   };
 
   # Unreal Engine binaries

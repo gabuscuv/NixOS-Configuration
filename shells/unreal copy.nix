@@ -12,19 +12,14 @@ let
 
   nixConfig.allow-unfree = true;
 
-  ## Query for Unreal Engine 5.7
-  # SetupAndroid.sh android-34 35.0.1 3.22.1 27.2.12479018
-
   ## Unreal Android Development / VR Untethered Development
-  androidVersion = "35.0.1";
+  androidVersion = "33.0.2";
 
   androidSdk =
     (pkgs.androidenv.composeAndroidPackages {
-      platformVersions = [ "34" ];
+      platformVersions = [ "33" ];
       includeNDK = true;
-      ndkVersion = "27.2.12479018";
-      ## Some old Version of UE required
-      ## ndkVersion = "25.1.8937393";
+      ndkVersion = "25.1.8937393";
       cmakeVersions = [ "3.22.1" ];
       # it supposed to be 33.0.2 but... set it to lowest available to avoid broken dependencies
       platformToolsVersion = "35.0.1";
@@ -151,9 +146,8 @@ in
     export FHS_CURRENT="${currentFHS}"
     export DOTNET_ROOT="${dotnetPkg}"
     export ANDROID_HOME=${androidSdk}/libexec/android-sdk 
-    export STUDIO_HOME="$ANDROID_HOME"
     export ANDROID_SDK_ROOT="$ANDROID_HOME"
-    export STUDIO_SDK_PATH="$ANDROID_HOME"
+    STUDIO_SDK_PATH="$ANDROID_HOME"
     export ANDROID_USER_HOME="$HOME/.android"
     export ANDROID_AVD_HOME="$HOME/.android/avd"
 
