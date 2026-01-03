@@ -26,12 +26,20 @@ pkgs.mkShell {
   packages = with pkgs; [
     unityhub
     jdk17
-    gradle
     dotnet-sdk_8
   ];
 
   shellHook = ''
-    export ANDROID_SDK_ROOT=${androidSdk}
+    export ANDROID_HOME=${androidSdk}/libexec/android-sdk 
+    export STUDIO_HOME="$ANDROID_HOME"
+    export ANDROID_SDK_ROOT="$ANDROID_HOME"
+    export STUDIO_SDK_PATH="$ANDROID_HOME"
+
+    export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/
+
+    export ANDROID_USER_HOME="$HOME/.android"
+    export ANDROID_AVD_HOME="$HOME/.android/avd"
+
     export JAVA_HOME=${pkgs.jdk17}
     echo "🔷 Unity devShell loaded"
   '';
