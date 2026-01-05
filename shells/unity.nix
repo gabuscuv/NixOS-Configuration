@@ -8,10 +8,10 @@
 }:
 let
   ## Unity Android Development / VR Untethered Development
-  androidVersion = "34.0.0";
+  androidVersion = "35.0.0";
   androidSdk =
     (pkgs.androidenv.composeAndroidPackages {
-      platformVersions = [ "34" ];
+      platformVersions = [ "35" ];
       cmdLineToolsVersion = "6.0";
       includeNDK = true;
       ndkVersion = "23.1.7779620"; # r23b

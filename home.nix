@@ -329,7 +329,7 @@
     settings = {
       user = {
         name = "Gabriel Bustillo del Cuvillo";
-        email = "me@gabusuv.dev";
+        email = "me@gabuscuv.dev";
       };
     };
   };
