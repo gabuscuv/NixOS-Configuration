@@ -20,7 +20,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur.url = "github:nix-community/NUR";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -38,87 +41,70 @@
         config = {
           allowUnfree = true;
           android_sdk.accept_license = true;
-          overlays = [
-            inputs.nur.overlay
-          ];
         };
       };
+      mkHost =
+        {
+          hostModules,
+          extraModules ? [ ],
+          extraSpecialArgs ? { },
+        }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+          }
+          // extraSpecialArgs;
+          modules = [
+            { nixpkgs.overlays = [ inputs.nur.overlays.default ]; }
+            inputs.nixos-rocksmith.nixosModules.default
+            home-manager.nixosModules.home-manager
 
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.gabuscuv = import ./home.nix;
+            }
+
+            ./configuration.nix
+          ]
+          ++ hostModules
+          ++ extraModules;
+        };
     in
     {
-      nixosConfigurations.generic-libvirt = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs; };
-        modules = [
-          { nixpkgs.overlays = [ inputs.nur.overlays.default ]; }
-          inputs.nixos-rocksmith.nixosModules.default
-          ./configuration.nix
-          ./hosts/generic-libvirt
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.gabuscuv = import ./home.nix;
-          }
+      nixosConfigurations = {
+        generic-libvirt = mkHost {
+          hostModules = [ ./hosts/generic-libvirt ];
+        };
+
+        Victoriqu3 = mkHost {
+          hostModules = [
+            inputs.nixos-hardware.nixosModules.lenovo-legion-15ahp10-oled
+            ./hosts/laptop
+          ];
+        };
+
+        shironeko = mkHost {
+          hostModules = [ ./hosts/shironeko ];
+        };
+        verlays = [
+          inputs.nur.overlay
         ];
+
+        rory = mkHost {
+          hostModules = [ ./hosts/rory ];
+        };
+
       };
-      nixosConfigurations.Victoriqu3 = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs; };
-        modules = [
-          { nixpkgs.overlays = [ inputs.nur.overlays.default ]; }
-          inputs.nixos-rocksmith.nixosModules.default
-          ./configuration.nix
-          inputs.nixos-hardware.nixosModules.lenovo-legion-15ahp10-oled
-          ./hosts/laptop
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.gabuscuv = import ./home.nix;
-          }
-        ];
-      };
-      nixosConfigurations.shironeko = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          { nixpkgs.overlays = [ inputs.nur.overlays.default ]; }
-          inputs.nixos-rocksmith.nixosModules.default
-          ./configuration.nix
-          ./hosts/shironeko
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            nixpkgs.overlays = [ nur.overlay ];
-            home-manager.users.gabuscuv = import ./home.nix;
-          }
-        ];
-      };
-      nixosConfigurations.rory = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          { nixpkgs.overlays = [ inputs.nur.overlays.default ]; }
-          inputs.nixos-rocksmith.nixosModules.default
-          ./configuration.nix
-          ./hosts/rory
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit nur; };
-            home-manager.users.gabuscuv = import ./home.nix;
-          }
-        ];
-      };
-      devShells.${system} = {
-        unreal = import ./shells/unreal.nix { inherit pkgs; };
-        godot = import ./shells/godot.nix { inherit pkgs; };
-        unity = import ./shells/unity.nix { inherit pkgs; };
-        unity6 = import ./shells/unity6.nix { inherit pkgs; };
-        android = import ./shells/android.nix { inherit pkgs; };
-        cpp = import ./shells/cpp.nix { inherit pkgs; };
-        node = import ./shells/node.nix { inherit pkgs; };
+      devShells.${system} = nixpkgs.lib.mapAttrs (_: path: import path { inherit pkgs; }) {
+        unreal = ./shells/unreal.nix;
+        godot = ./shells/godot.nix;
+        unity = ./shells/unity.nix;
+        unity6 = ./shells/unity6.nix;
+        android = ./shells/android.nix;
+        cpp = ./shells/cpp.nix;
+        node = ./shells/node.nix;
       };
     };
 }
