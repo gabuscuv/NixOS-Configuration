@@ -49,6 +49,8 @@ in
     pkgs:
     (with pkgs; [
       godot_4-mono
+      godotPackages.export-template-mono
+      godotPackages.export-templates-mono-bin
       mono
       udev
       alsa-lib
@@ -81,7 +83,7 @@ in
       expat
       libdrm
       dotnet-sdk_8
-      jdk11
+      jdk17
       vulkan-loader
       vulkan-tools
       wayland
@@ -126,13 +128,20 @@ in
 
   profile = ''
     export FHS_CURRENT="${currentFHS}"
+
     export DOTNET_ROOT="${dotnetPkg}"
-    export ANDROID_HOME=${androidSdk}
+    export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+
+    export LD_LIBRARY_PATH=/usr/lib:/usr/lib32
+
+    # Android/OpenXR Builds
+    export JAVA_HOME=${pkgs.jdk17}
+    export ANDROID_HOME=${androidSdk}/libexec/android-sdk 
+    export STUDIO_HOME="$ANDROID_HOME"
     export ANDROID_SDK_ROOT="$ANDROID_HOME"
-    STUDIO_SDK_PATH="$ANDROID_HOME"
+    export STUDIO_SDK_PATH="$ANDROID_HOME"
+
     export ANDROID_USER_HOME="$HOME/.android"
     export ANDROID_AVD_HOME="$HOME/.android/avd"
-    export LD_LIBRARY_PATH=/usr/lib:/usr/lib32
-    export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
   ''; # + lib.strings.concatStrings (lib.attrsets.mapAttrsToList (name: value: ''export ${name}="${value}"'') userEnv);
 }).env

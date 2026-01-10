@@ -142,14 +142,21 @@ in
   nativeBuildInputs = deps;
 
   profile = ''
-    unset WAYLAND_DISPLAY
     export FHS_CURRENT="${currentFHS}"
-    export DOTNET_ROOT="${dotnetPkg}"
-    export ANDROID_HOME=${androidSdk}/libexec/android-sdk 
-    export ANDROID_SDK_ROOT="$ANDROID_HOME"
-    STUDIO_SDK_PATH="$ANDROID_HOME"
-    export ANDROID_USER_HOME="$HOME/.android"
-    export ANDROID_AVD_HOME="$HOME/.android/avd"
+
+    ## Stuff for Attempted to avoid issues
+    ## Changed to x11 for avoid Window Composition issues.
+    unset WAYLAND_DISPLAY
+    export SDL_VIDEODRIVER=x11
+
+    # NVIDIA-Prime parameters
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
+
+    # Some stuff attempts for Chrome Embedded Framewoork/ANGLE Issues
+    export NIXOS_OZONE_WL=1
 
     # See https://gitlab.steamos.cloud/steamrt/steam-runtime-tools/-/blob/main/docs/distro-assumptions.md#graphics-driver
     export LIBGL_DRIVERS_PATH=/run/opengl-driver/lib/dri:/run/opengl-driver-32/lib/dri
@@ -157,11 +164,6 @@ in
     export __EGL_EXTERNAL_PLATFORM_CONFIG_DIRS=/run/opengl-driver/share/egl/egl_external_platform.d
     export LIBVA_DRIVERS_PATH=/run/opengl-driver/lib/dri:/run/opengl-driver-32/lib/dri
     export VDPAU_DRIVER_PATH=/run/opengl-driver/lib/vdpau:/run/opengl-driver-32/lib/vdpau
-
-    export __NV_PRIME_RENDER_OFFLOAD=1
-    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export __VK_LAYER_NV_optimus=NVIDIA_only
 
     export LD_LIBRARY_PATH=/usr/lib:/usr/lib32
     export LD_LIBRARY_PATH="${
@@ -172,11 +174,21 @@ in
       ]
     }:$LD_LIBRARY_PATH"
 
-    export SDL_VIDEODRIVER=x11
+    ## Builder Toolchain
+    export DOTNET_ROOT="${dotnetPkg}"
     export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-    export NIXOS_OZONE_WL=1
 
     # GDB Python pretty-printers
     export PYTHONPATH="${pkgs.gcc}/share/gcc-${pkgs.gcc.version}/python:$PYTHONPATH"
+
+    # Android/OpenXR Builds
+    export JAVA_HOME=${pkgs.jdk11}
+    export ANDROID_HOME=${androidSdk}/libexec/android-sdk 
+    export STUDIO_HOME="$ANDROID_HOME"
+    export ANDROID_SDK_ROOT="$ANDROID_HOME"
+    export STUDIO_SDK_PATH="$ANDROID_HOME"
+    export ANDROID_USER_HOME="$HOME/.android"
+    export ANDROID_AVD_HOME="$HOME/.android/avd"
+    export ANDROID_AVD_HOME="$HOME/.android/avd"
   ''; # + lib.strings.concatStrings (lib.attrsets.mapAttrsToList (name: value: ''export ${name}="${value}"'') userEnv);
 }).env
