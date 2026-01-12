@@ -9,6 +9,12 @@
   ############################################################
   # Shell
   ############################################################
+  programs.kitty = {
+    enable = true;
+    enableGitIntegration = true;
+    shellIntegration.enableZshIntegration = true;
+  };
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -302,7 +308,7 @@
     ## Guitar
     # Utils
     guitarix
-    #tuxguitar ## Fails to build
+    #tuxguitar # Fails to build
     # Rocksmith 2014 / WineASIO
     helvum # Lets you view pipewire graph and connect IOs
   ];
@@ -453,6 +459,17 @@
           marp-team.marp-vscode
           yzhang.markdown-all-in-one
           bierner.github-markdown-preview
+        ];
+      };
+      LaTeX = {
+        userSettings = {
+          "git.autofetch" = true;
+          "editor.formatOnSave" = true;
+          "cmake.configureOnOpen" = true;
+        };
+        extensions = with pkgs.vscode-extensions; [
+          eamodio.gitlens
+          james-yu.latex-workshop
         ];
       };
     };

@@ -85,11 +85,17 @@
   ############################################################
   # Desktop (Wayland + KDE)
   ############################################################
-  services.xserver.enable = true;
+  services.xserver = {
+    enable = true;
+    excludePackages = [ pkgs.xterm ];
+  };
+
   services.displayManager.sddm.enable = true;
   # Enable the KDE Plasma Desktop Environment.
   services.desktopManager.plasma6.enable = true;
   programs.kdeconnect.enable = true;
+
+  environment.plasma6.excludePackages = [ pkgs.kdePackages.konsole ];
 
   ## Audio
   services.pipewire = {
@@ -147,10 +153,15 @@
     remotePlay.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
     rocksmithPatch.enable = true;
-    package = pkgs.steam.override {
-      extraLibraries = pkgs': with pkgs'; [ pkgsi686Linux.pipewire.jack ]; # Adds pipewire jack (32-bit)
-      extraPkgs = pkgs': with pkgs'; [ wineasio ]; # Adds wineasio
-    };
+    # package = pkgs.steam.override {
+    #   extraLibraries = pkgs: [ pkgs.pkgsi686Linux.pipewire.jack ]; # Adds pipewire jack (32-bit)
+    #   extraPkgs = pkgs: [ pkgs.wineasio ]; # Adds wineasio
+    #   extraProfile = ''
+    #     export LD_LIBRARY_PATH=${pkgs.pkgsi686Linux.pipewire.jack}:$LD_LIBRARY_PATH
+    #     export LD_LIBRARY_PATH=${pkgs.wineasio}:$LD_LIBRARY_PATH
+
+    #   '';
+    # };
   };
 
   # Unreal Engine binaries

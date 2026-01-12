@@ -13,11 +13,17 @@
       url = "github:gabuscuv/nixos-hardware/15ahp10";
     };
 
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ## Rocksmith 2014 WineASIO / pipewire
     # A flake providing necessary module `programs.steam.rocksmithPatch`
     nixos-rocksmith = {
       url = "github:re1n0/nixos-rocksmith";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nix-gaming.follows = "nix-gaming";
     };
 
     nur = {
@@ -30,8 +36,6 @@
     {
       self,
       nixpkgs,
-      home-manager,
-      nur,
       ...
     }@inputs:
     let
@@ -52,14 +56,15 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit inputs;
-          }
-          // extraSpecialArgs;
+            inherit
+              inputs
+              system
+              ;
+          };
           modules = [
             { nixpkgs.overlays = [ inputs.nur.overlays.default ]; }
             inputs.nixos-rocksmith.nixosModules.default
-            home-manager.nixosModules.home-manager
-
+            inputs.home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
@@ -88,9 +93,6 @@
         shironeko = mkHost {
           hostModules = [ ./hosts/shironeko ];
         };
-        verlays = [
-          inputs.nur.overlay
-        ];
 
         rory = mkHost {
           hostModules = [ ./hosts/rory ];
