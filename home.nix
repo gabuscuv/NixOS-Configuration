@@ -33,6 +33,15 @@
     };
   };
 
+xdg.terminal-exec = {
+    enable = true;
+    settings = {
+      default = [
+        "kitty.desktop"
+      ];
+    };
+  };
+
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
@@ -494,6 +503,21 @@
   services.kdeconnect = {
     enable = true;
     indicator = true;
+  };
+
+    xdg.portal = {
+    enable = true;
+
+    config = {
+      kde.default = [ "kde" ];
+      kde."org.freedesktop.portal.FileChooser" = [ "kde" ];
+    };
+
+    extraPortals = [
+      pkgs.xdg-desktop-portal-termfilechooser
+
+      pkgs.kdePackages.xdg-desktop-portal-kde
+    ];
   };
 
 }

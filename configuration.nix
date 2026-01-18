@@ -133,6 +133,7 @@
 
   ## System Packages (minimal) || Avoid install
   environment.systemPackages = with pkgs; [
+    efibootmgr
     alvr
     duperemove
     vulkan-tools
@@ -142,6 +143,8 @@
     wget
     curl
     rtaudio
+    # xdg-terminal enablement
+    kdePackages.kconfig
   ];
 
   ## Gamemode
