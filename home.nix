@@ -33,7 +33,7 @@
     };
   };
 
-xdg.terminal-exec = {
+  xdg.terminal-exec = {
     enable = true;
     settings = {
       default = [
@@ -352,137 +352,109 @@ xdg.terminal-exec = {
   ############################################################
   # VS Code (Extensions)
   ############################################################
-  programs.vscode = {
-    enable = true;
-    profiles = {
-      default = {
-        userSettings = {
-          "git.autofetch" = true;
-          "editor.formatOnSave" = true;
-          "cmake.configureOnOpen" = true;
-        };
-        extensions = with pkgs.vscode-extensions; [
-          eamodio.gitlens
-        ];
+  programs.vscode =
+    let
+      commonSettings = {
+        "git.autofetch" = true;
+        "editor.formatOnSave" = true;
+        "cmake.configureOnOpen" = true;
       };
-      cpp = {
-        userSettings = {
-          "git.autofetch" = true;
-          "editor.formatOnSave" = true;
-          "cmake.configureOnOpen" = true;
+
+      commonExtensions = with pkgs.vscode-extensions; [
+        eamodio.gitlens
+        mkhl.direnv
+      ];
+
+      dotNetEnvironment = with pkgs.vscode-extensions; [
+        eamodio.gitlens
+        ms-dotnettools.csharp
+        ms-dotnettools.vscode-dotnet-runtime
+      ];
+    in
+    {
+      enable = true;      
+      
+      profiles = {
+        cpp = {
+          userSettings = commonSettings;
+          extensions =
+            commonExtensions
+            ++ (with pkgs.vscode-extensions; [
+              ms-vscode.cpptools
+              ms-vscode.cmake-tools
+            ]);
         };
-        extensions = with pkgs.vscode-extensions; [
-          ms-vscode.cpptools
-          ms-vscode.cmake-tools
-          # ms-vscode.vscode-typescript-next ## TODO | FIXME
-          esbenp.prettier-vscode
-          eamodio.gitlens
-          # ms-vscode.unreal-engine ## TODO | FIXME
-        ];
-      };
-      dotnet = {
-        userSettings = {
-          "git.autofetch" = true;
-          "editor.formatOnSave" = true;
-          "cmake.configureOnOpen" = true;
+        dotnet = {
+          userSettings = commonSettings;
+          extensions = commonExtensions 
+          ++ dotNetEnvironment;
         };
-        extensions = with pkgs.vscode-extensions; [
-          ms-dotnettools.csharp
-          ms-dotnettools.vscode-dotnet-runtime
-          eamodio.gitlens
-        ];
-      };
-      unity = {
-        userSettings = {
-          "git.autofetch" = true;
-          "editor.formatOnSave" = true;
-          "cmake.configureOnOpen" = true;
+        unity = {
+          userSettings = commonSettings;
+          extensions =
+            commonExtensions
+            ++ dotNetEnvironment
+            ++ (with pkgs.vscode-extensions; [
+              visualstudiotoolsforunity.vstuc
+            ]);
         };
-        extensions = with pkgs.vscode-extensions; [
-          ms-dotnettools.csdevkit
-          visualstudiotoolsforunity.vstuc
-          eamodio.gitlens
-        ];
-      };
-      javascript = {
-        userSettings = {
-          "git.autofetch" = true;
-          "editor.formatOnSave" = true;
-          "cmake.configureOnOpen" = true;
+        javascript = {
+          userSettings = commonSettings;
+          extensions =
+            commonExtensions
+            ++ (with pkgs.vscode-extensions; [
+              bradlc.vscode-tailwindcss
+              dbaeumer.vscode-eslint
+              esbenp.prettier-vscode
+              unifiedjs.vscode-mdx
+              lokalise.i18n-ally
+            ]);
         };
-        extensions = with pkgs.vscode-extensions; [
-          eamodio.gitlens
-          bradlc.vscode-tailwindcss
-          dbaeumer.vscode-eslint
-          esbenp.prettier-vscode
-          visualstudiotoolsforunity.vstuc
-          unifiedjs.vscode-mdx
-          lokalise.i18n-ally
-        ];
-      };
-      vanillascript = {
-        userSettings = {
-          "git.autofetch" = true;
-          "editor.formatOnSave" = true;
-          "cmake.configureOnOpen" = true;
+        vanillascript = {
+          userSettings = commonSettings;
+          extensions =
+            commonExtensions
+            ++ (with pkgs.vscode-extensions; [
+              astro-build.astro-vscode
+            ]);
         };
-        extensions = with pkgs.vscode-extensions; [
-          eamodio.gitlens
-          astro-build.astro-vscode
-        ];
-      };
-      nix = {
-        userSettings = {
-          "git.autofetch" = true;
-          "editor.formatOnSave" = true;
-          "cmake.configureOnOpen" = true;
+nix = {
+          userSettings = commonSettings;
+          extensions =
+            commonExtensions
+            ++ (with pkgs.vscode-extensions; [
+              jnoortheen.nix-ide
+            ]);
         };
-        extensions = with pkgs.vscode-extensions; [
-          eamodio.gitlens
-          jnoortheen.nix-ide
-          mkhl.direnv
-        ];
-      };
-      godot = {
-        userSettings = {
-          "git.autofetch" = true;
-          "editor.formatOnSave" = true;
-          "cmake.configureOnOpen" = true;
+        godot = {
+          userSettings = commonSettings;
+          extensions =
+            commonExtensions
+            ++ dotNetEnvironment
+            ++ (with pkgs.vscode-extensions; [
+              geequlim.godot-tools
+            ]);
         };
-        extensions = with pkgs.vscode-extensions; [
-          eamodio.gitlens
-          geequlim.godot-tools
-          ms-dotnettools.csharp
-          ms-dotnettools.vscode-dotnet-runtime
-          # neikeq.godot-csharp-vscode # Not included in NixPkg
-        ];
-      };
-      markdown = {
-        userSettings = {
-          "git.autofetch" = true;
-          "editor.formatOnSave" = true;
-          "cmake.configureOnOpen" = true;
+        markdown = {
+          userSettings = commonSettings;
+          extensions =
+            commonExtensions
+            ++ (with pkgs.vscode-extensions; [
+              marp-team.marp-vscode
+              yzhang.markdown-all-in-one
+              bierner.github-markdown-preview
+            ]);
         };
-        extensions = with pkgs.vscode-extensions; [
-          eamodio.gitlens
-          marp-team.marp-vscode
-          yzhang.markdown-all-in-one
-          bierner.github-markdown-preview
-        ];
-      };
-      LaTeX = {
-        userSettings = {
-          "git.autofetch" = true;
-          "editor.formatOnSave" = true;
-          "cmake.configureOnOpen" = true;
+        LaTeX = {
+          userSettings = commonSettings;
+          extensions =
+            commonExtensions
+            ++ (with pkgs.vscode-extensions; [
+              james-yu.latex-workshop
+            ]);
         };
-        extensions = with pkgs.vscode-extensions; [
-          eamodio.gitlens
-          james-yu.latex-workshop
-        ];
       };
     };
-  };
 
   ############################################################
   # Vim (CLI editor)
@@ -505,7 +477,7 @@ xdg.terminal-exec = {
     indicator = true;
   };
 
-    xdg.portal = {
+  xdg.portal = {
     enable = true;
 
     config = {

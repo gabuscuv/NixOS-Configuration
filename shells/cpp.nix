@@ -10,9 +10,13 @@ pkgs.mkShell {
     gdb
     cmake
     ninja
-    pkg-config
+    autoconf
+    automake
+    libtool
+    pkg-config-unwrapped
     clang-tools
     valgrind
+    systemd
   ];
 
   shellHook = ''

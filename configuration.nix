@@ -42,7 +42,12 @@
     # It's still possible to open the bootloader list by pressing any key
     # It will just not appear on screen unless a key is pressed
     loader.timeout = 0;
-
+    ## Disabled NFC embedded (for using libnfc )
+    blacklistedKernelModules = [
+      "nfc"
+      "pn533"
+      "pn533_usb"
+    ];
   };
 
   # Configure network proxy if necessary
