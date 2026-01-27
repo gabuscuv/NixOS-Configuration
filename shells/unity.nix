@@ -20,6 +20,14 @@ let
       platformToolsVersion = "35.0.1";
       buildToolsVersions = [ androidVersion ];
     }).androidsdk;
+  dotnetPkg = (
+    with pkgs.dotnetCorePackages;
+    combinePackages [
+      dotnet_8.sdk
+      dotnet_9.sdk
+    ]
+  );
+
 in
 pkgs.mkShell {
   name = "unity-shell";
@@ -27,10 +35,13 @@ pkgs.mkShell {
   packages = with pkgs; [
     unityhub
     jdk11
-    dotnet-sdk_8
+    dotnetPkg
   ];
 
   shellHook = ''
+    # DotNet
+    export DOTNET_ROOT=${dotnetPkg}
+
     # Android/OpenXR Builds
     export JAVA_HOME=${pkgs.jdk17}
     export ANDROID_HOME=${androidSdk}/libexec/android-sdk 

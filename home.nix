@@ -89,6 +89,7 @@
     XDG_RUNTIME_DIR = "/run/user/$UID";
 
     ## XDG Derivated
+    ROSLYN_CACHES_DIR = "${config.xdg.cacheHome}/roslyn";
     CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nv";
     GNUPGHOME = "${config.xdg.dataHome}/gnupg";
     GRADLE_USER_HOME = "${config.xdg.dataHome}/gradle";
@@ -355,25 +356,38 @@
   programs.vscode =
     let
       commonSettings = {
+        "workbench.colorTheme" = "Dark+ Pure Black (OLED)";
+        "workbench.preferredDarkColorTheme" = "Dark+ Pure Black (OLED)";
+        "editor.fontLigatures" = true;
+        "editor.renderLineHighlight" = "all";
         "git.autofetch" = true;
         "editor.formatOnSave" = true;
         "cmake.configureOnOpen" = true;
       };
 
-      commonExtensions = with pkgs.vscode-extensions; [
-        eamodio.gitlens
-        mkhl.direnv
-      ];
+      commonExtensions =
+        with pkgs.vscode-extensions;
+        [
+          eamodio.gitlens
+          mkhl.direnv
+        ]
+        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "oled-pure-black---vscode";
+            publisher = "ChadBaileyVh";
+            version = "1.0.1";
+            sha256 = "sha256-ukmtfleNJ9ScjSA36Gyok5e8tvzGvveVnCqy+ZV9kPo=";
+          }
+        ];
 
       dotNetEnvironment = with pkgs.vscode-extensions; [
-        eamodio.gitlens
         ms-dotnettools.csharp
         ms-dotnettools.vscode-dotnet-runtime
       ];
     in
     {
-      enable = true;      
-      
+      enable = true;
+
       profiles = {
         cpp = {
           userSettings = commonSettings;
@@ -386,8 +400,7 @@
         };
         dotnet = {
           userSettings = commonSettings;
-          extensions = commonExtensions 
-          ++ dotNetEnvironment;
+          extensions = commonExtensions ++ dotNetEnvironment;
         };
         unity = {
           userSettings = commonSettings;
@@ -395,6 +408,7 @@
             commonExtensions
             ++ dotNetEnvironment
             ++ (with pkgs.vscode-extensions; [
+              ms-dotnettools.csdevkit
               visualstudiotoolsforunity.vstuc
             ]);
         };
@@ -418,7 +432,7 @@
               astro-build.astro-vscode
             ]);
         };
-nix = {
+        nix = {
           userSettings = commonSettings;
           extensions =
             commonExtensions
