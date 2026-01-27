@@ -231,21 +231,10 @@
     })
     godot_4-mono
 
-    # C / C++
-    gcc
-    gdb
-    cmake
-    meson
-    ninja
-
     # C# / .NET
     dotnet-sdk_8
     dotnet-runtime_8
     mono
-
-    # Web / Next.js
-    nodejs_20
-    corepack
 
     # Basic Python
     python3Minimal
@@ -362,7 +351,7 @@
         "editor.renderLineHighlight" = "all";
         "git.autofetch" = true;
         "editor.formatOnSave" = true;
-        "cmake.configureOnOpen" = true;
+        "terminal.integrated.defaultProfile.linux" = "zsh";
       };
 
       commonExtensions =
@@ -390,7 +379,9 @@
 
       profiles = {
         cpp = {
-          userSettings = commonSettings;
+          userSettings = commonSettings ++ {
+            "cmake.configureOnOpen" = true;
+          };
           extensions =
             commonExtensions
             ++ (with pkgs.vscode-extensions; [

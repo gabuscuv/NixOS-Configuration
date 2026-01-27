@@ -8,7 +8,7 @@ pkgs.mkShell {
   buildInputs = with pkgs; [
     # Runtime
     nodejs_20
-    yarn
+    corepack
 
     # VS Code / TypeScript support
     nodePackages.typescript
