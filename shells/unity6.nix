@@ -24,7 +24,7 @@ let
     with pkgs.dotnetCorePackages;
     combinePackages [
       dotnet_8.sdk
-      dotnet_9.sdk
+      sdk_9_0-bin
     ]
   );
 
@@ -39,8 +39,17 @@ pkgs.mkShell {
   ];
 
   shellHook = ''
+    #export VSCODE_JAIL=$HOME/.local/share/vscode-jail/unity
+    # VSCode Workaround
+    #export XDG_DATA_HOME="$VSCODE_JAIL/share"
+    #export XDG_CONFIG_HOME="$VSCODE_JAIL/.config"
+    #export VSCODE_USER_DATA_DIR="$VSCODE_JAIL/user-data"
+    #export VSCODE_EXTENSIONS="$VSCODE_JAIL/extensions"
+
     # DotNet
     export DOTNET_ROOT=${dotnetPkg}
+    export PATH=$PATH:${dotnetPkg}/bin
+
 
     # Android/OpenXR Builds
     export JAVA_HOME=${pkgs.jdk17}

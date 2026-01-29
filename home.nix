@@ -379,9 +379,7 @@
 
       profiles = {
         cpp = {
-          userSettings = commonSettings ++ {
-            "cmake.configureOnOpen" = true;
-          };
+          userSettings = commonSettings;
           extensions =
             commonExtensions
             ++ (with pkgs.vscode-extensions; [
