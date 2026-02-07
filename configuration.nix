@@ -18,6 +18,10 @@
     "flakes"
   ];
 
+  # All the computers I currently use have Bluetooth, and so do my hearing aids.
+  # Enabled globally.
+  hardware.bluetooth.enable = true;
+
   ## Boot
   boot = {
     loader = {
