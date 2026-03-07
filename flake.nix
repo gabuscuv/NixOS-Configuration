@@ -9,6 +9,8 @@
       inputs.nixpkgs.follows = "nixpkgs"; # Follows stable nixpkgs by default
     };
 
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     nixos-hardware = {
       url = "github:gabuscuv/nixos-hardware/15ahp10";
     };
@@ -62,7 +64,14 @@
               ;
           };
           modules = [
-            { nixpkgs.overlays = [ inputs.nur.overlays.default ]; }
+            {
+              nixpkgs.overlays = [
+                inputs.nur.overlays.default
+                (final: prev: {
+                  unstable = inputs.nixpkgs-unstable.legacyPackages.${final.stdenv.hostPlatform.system};
+                })
+              ];
+            }
             inputs.nixos-rocksmith.nixosModules.default
             inputs.home-manager.nixosModules.home-manager
             {

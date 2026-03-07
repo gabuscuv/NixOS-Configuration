@@ -307,7 +307,7 @@
     ## Guitar
     # Utils
     guitarix
-    tuxguitar
+    unstable.tuxguitar
     # Rocksmith 2014 / WineASIO
     helvum # Lets you view pipewire graph and connect IOs
   ];
