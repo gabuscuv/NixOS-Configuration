@@ -232,8 +232,14 @@
     godot_4-mono
 
     # C# / .NET
-    dotnet-sdk_8
-    dotnet-runtime_8
+    (
+      with pkgs.dotnetCorePackages;
+      combinePackages [
+        runtime_8_0-bin
+        runtime_9_0-bin
+        runtime_10_0-bin
+      ]
+    )
     mono
 
     # Basic Python
