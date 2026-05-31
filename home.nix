@@ -18,6 +18,8 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    ## Required as 26.05 if you are from below versions, Check MigrationDir
+    dotDir = "${config.xdg.configHome}/zsh";
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
@@ -117,6 +119,9 @@
 
   programs.firefox = {
     enable = true;
+    ## Required as 26.05 if you are from below versions, Check MigrationDir
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
+
     profiles.default = {
       id = 0;
       isDefault = true;
@@ -279,8 +284,8 @@
     imhex
 
     # Utilities
-    wineWowPackages.full
-    nixfmt-rfc-style
+    wineWow64Packages.full
+    nixfmt
     ripgrep
     lm_sensors
     fd
@@ -313,9 +318,10 @@
     ## Guitar
     # Utils
     guitarix
-    unstable.tuxguitar
+    #unstable.tuxguitar
+    tuxguitar
     # Rocksmith 2014 / WineASIO
-    helvum # Lets you view pipewire graph and connect IOs
+    crosspipe # Lets you view pipewire graph and connect IOs
   ];
 
   ############################################################

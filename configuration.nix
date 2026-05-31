@@ -159,6 +159,7 @@
     wget
     curl
     rtaudio
+    android-tools
     # xdg-terminal enablement
     kdePackages.kconfig
   ];
@@ -198,8 +199,6 @@
         pkgs:
         (with pkgs; [
           libxau
-        ])
-        ++ (with pkgs.xorg; [
           libICE
           libSM
           libX11
@@ -235,9 +234,4 @@
   # Misc
   services.hardware.openrgb.enable = true;
 
-  # Android // TODO! | FIXME!
-  programs.adb.enable = true;
-  #services.udev.packages = with pkgs; [
-  #android-udev-rules
-  #];
 }
