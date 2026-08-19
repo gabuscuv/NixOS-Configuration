@@ -65,12 +65,17 @@
           };
           modules = [
             {
-              nixpkgs.overlays = [
-                inputs.nur.overlays.default
-                (final: prev: {
-                  unstable = inputs.nixpkgs-unstable.legacyPackages.${final.stdenv.hostPlatform.system};
-                })
-              ];
+              nixpkgs = {
+                config = {
+                  microsoftVisualStudioLicenseAccepted = true;
+                };
+                overlays = [
+                  inputs.nur.overlays.default
+                  (final: prev: {
+                    unstable = inputs.nixpkgs-unstable.legacyPackages.${final.stdenv.hostPlatform.system};
+                  })
+                ];
+              };
             }
             inputs.nixos-rocksmith.nixosModules.default
             inputs.home-manager.nixosModules.home-manager
@@ -115,6 +120,7 @@
         unity6 = ./shells/unity6.nix;
         android = ./shells/android.nix;
         cpp = ./shells/cpp.nix;
+        esp32 = ./shells/esp32.nix;
         node = ./shells/node.nix;
       };
     };

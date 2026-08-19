@@ -220,20 +220,20 @@
   ############################################################
   home.packages = with pkgs; [
     # Game Engines
-    (unityhub.override {
-      extraLibs =
-        pkgs: with pkgs; [
-          # Without this, the vulkan libs will not be found -> no vulkan
-          # renderer in unity (required for HDRP)
-          vulkan-loader
+    #(unityhub.override {
+    # extraLibs =
+    #    pkgs: with pkgs; [
+    # Without this, the vulkan libs will not be found -> no vulkan
+    # renderer in unity (required for HDRP)
+    #     vulkan-loader
 
-          # Pre 2022.3 versions require this:
-          # openssl_1_1
+    # Pre 2022.3 versions require this:
+    # openssl_1_1
 
-          # To ensure unity finds VS Code in its path
-          vscode
-        ];
-    })
+    # To ensure unity finds VS Code in its path
+    #    vscode
+    # ];
+    # })
     godot_4-mono
 
     # C# / .NET
@@ -293,6 +293,7 @@
     screen
     rdiff-backup
     sqlitebrowser
+    drawio
 
     # Archives
     unzip
@@ -398,6 +399,24 @@
               ms-vscode.cpptools
               ms-vscode.cmake-tools
             ]);
+        };
+        esp32 = {
+          userSettings = commonSettings;
+          extensions =
+            commonExtensions
+            ++ (with pkgs.vscode-extensions; [
+              ms-vscode.cpptools
+              ms-vscode.cmake-tools
+              llvm-vs-code-extensions.vscode-clangd
+            ])
+            ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+              {
+                name = "esp-idf-extension";
+                publisher = "espressif";
+                version = "2.2.0";
+                sha256 = "sha256-5D2NG+M8BsKI2dKV+u/gM4Ys4PMi58tBIm10wHNyx3Q=";
+              }
+            ];
         };
         dotnet = {
           userSettings = commonSettings;

@@ -3,12 +3,7 @@
 
   imports = [
     # Include the results of the hardware scan.
-    ./nixOSModules/wallpaper-engine-kde-plugin.nix # Or another path to the file
   ];
-
-  nixos.pkgs = {
-    wallpaper-engine-kde-plugin.enable = false;
-  };
 
   system.stateVersion = "25.11";
   boot.kernelPackages = pkgs.linuxPackages_6_18;
@@ -188,6 +183,7 @@
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
     libuuid
+    stdenv.cc.cc.lib # # required for IDF VSCode Plugin
   ];
 
   # AppImage support, Needed for FMOD Studio and other apps

@@ -5,6 +5,11 @@
 pkgs.mkShell {
   name = "cpp-dev-shell";
 
+  nativeBuildInputs = with pkgs; [
+    cmake
+    pkg-config
+  ];
+
   buildInputs = with pkgs; [
     gcc
     gdb
@@ -16,7 +21,9 @@ pkgs.mkShell {
     pkg-config-unwrapped
     clang-tools
     valgrind
+    gtest
     systemd
+    udev
   ];
 
   shellHook = ''
